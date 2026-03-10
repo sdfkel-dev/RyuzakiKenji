@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>極秘 — 류자키 켄지 파일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Serif+JP:wght@300;400;700;900&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #ede8de;
+  --paper-dark: #ddd5c4;
+  --paper-deep: #cfc5b2;
+  --ink: #1c1712;
+  --ink-faded: #4a3f32;
+  --sepia: #8a7060;
+  --red: #b02020;
+  --red-dark: #7a1515;
+  --red-stamp: #c0392b;
+  --blue-stamp: #1a3a6b;
+  --fold: #c8bfaa;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: #2a2318;
+  font-family: 'Noto Serif KR', serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px 80px;
+  position: relative;
+}
+
+/* Desk surface texture */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.03) 3px, rgba(0,0,0,0.03) 4px),
+    repeating-linear-gradient(90deg, transparent, transparent 3px, rgba(0,0,0,0.02) 3px, rgba(0,0,0,0.02) 4px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── OUTER WRAPPER (dossier cover) ─── */
+.dossier {
+  width: 100%;
+  max-width: 900px;
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 30px 80px rgba(0,0,0,0.7));
+}
+
+/* Paper texture overlay */
+.paper-texture {
+  background: var(--paper);
+  position: relative;
+}
+.paper-texture::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+/* ─── HEADER ─── */
+.dossier-header {
+  background: var(--ink);
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.header-stripe {
+  height: 6px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--red) 0px, var(--red) 40px,
+    var(--ink) 40px, var(--ink) 50px
+  );
+}
+
+.header-inner {
+  padding: 28px 48px 24px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.header-title-block { }
+
+.header-kana {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 10px;
+  letter-spacing: 0.5em;
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 8px;
+  font-weight: 300;
+}
+
+.header-title {
+  font-family: 'Noto Serif JP', serif;
+  font-size: clamp(28px, 5vw, 48px);
+  font-weight: 900;
+  color: #f0e8d8;
+  letter-spacing: 0.15em;
+  line-height: 1;
+}
+
+.header-subtitle {
+  font-family: 'Courier Prime', monospace;
+  font-size: 11px;
+  color: rgba(255,255,255,0.25);
+  letter-spacing: 0.3em;
+  margin-top: 10px;
+  text-transform: uppercase;
+}
+
+.header-stamp-area {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.stamp {
+  font-family: 'Noto Serif JP', serif;
+  font-weight: 900;
+  border: 3px solid;
+  display: inline-block;
+  transform: rotate(-8deg);
+  letter-spacing: 0.1em;
+  line-height: 1;
+}
+.stamp-red {
+  color: rgba(192,57,43,0.7);
+  border-color: rgba(192,57,43,0.6);
+  padding: 6px 10px;
+  font-size: 20px;
+}
+.stamp-blue {
+  color: rgba(100,140,200,0.5);
+  border-color: rgba(100,140,200,0.4);
+  padding: 4px 8px;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  transform: rotate(5deg);
+}
+
+/* ─── FOLDER TABS ─── */
+.tab-bar {
+  display: flex;
+  padding: 0 48px;
+  background: var(--ink);
+  gap: 4px;
+  align-items: flex-end;
+}
+
+.tab-btn {
+  padding: 10px 28px 12px;
+  font-family: 'Noto Serif KR', serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.tab-btn.active {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.tab-btn:not(.active) {
+  background: #2e2a20;
+  color: rgba(255,255,255,0.35);
+}
+.tab-btn:not(.active):hover {
+  background: #3a352a;
+  color: rgba(255,255,255,0.55);
+}
+
+.tab-btn .tab-jp {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  display: block;
+  margin-bottom: 3px;
+  opacity: 0.6;
+}
+
+/* ─── TAB CONTENT AREA ─── */
+.tab-content {
+  display: none;
+}
+.tab-content.active {
+  display: block;
+}
+
+/* ─── CONTENT WRAPPER ─── */
+.content-wrap {
+  background: var(--paper);
+  padding: 0;
+  position: relative;
+}
+
+/* Ruled lines */
+.ruled-section {
+  background-image: repeating-linear-gradient(
+    180deg,
+    transparent,
+    transparent 31px,
+    rgba(180,165,140,0.35) 31px,
+    rgba(180,165,140,0.35) 32px
+  );
+  background-position: 0 16px;
+}
+
+/* ─── SECTION HEADERS ─── */
+.doc-section {
+  padding: 48px 48px 40px;
+  border-bottom: 2px solid var(--paper-deep);
+  position: relative;
+}
+
+.doc-section:last-child { border-bottom: none; }
+
+.doc-section-id {
+  font-family: 'Courier Prime', monospace;
+  font-size: 10px;
+  color: var(--sepia);
+  letter-spacing: 0.3em;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.doc-section-title {
+  font-family: 'Noto Serif JP', serif;
+  font-size: clamp(20px, 3vw, 28px);
+  font-weight: 900;
+  color: var(--ink);
+  letter-spacing: 0.1em;
+  margin-bottom: 4px;
+  line-height: 1.2;
+}
+
+.doc-section-title-kr {
+  font-size: 12px;
+  letter-spacing: 0.4em;
+  color: var(--sepia);
+  font-weight: 300;
+  margin-bottom: 28px;
+  font-family: 'Noto Serif KR', serif;
+}
+
+.doc-divider {
+  width: 100%;
+  height: 1px;
+  background: var(--fold);
+  margin-bottom: 32px;
+}
+
+/* ─── WORLD INTRO ─── */
+.intro-text {
+  font-size: 13.5px;
+  line-height: 2.4;
+  color: var(--ink-faded);
+  font-weight: 400;
+  font-family: 'Noto Serif KR', serif;
+  max-width: 680px;
+  position: relative;
+  z-index: 1;
+}
+
+.intro-text strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.year-callout {
+  display: inline-block;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: 'Courier Prime', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  padding: 2px 8px;
+  margin: 0 4px;
+  vertical-align: middle;
+}
+
+.redacted {
+  display: inline-block;
+  background: var(--ink);
+  color: var(--ink);
+  padding: 0 6px;
+  min-width: 80px;
+  position: relative;
+}
+
+/* ─── ORGANIZATION CARD ─── */
+.org-card {
+  background: var(--paper-dark);
+  border: 1px solid var(--fold);
+  padding: 32px;
+  margin-top: 32px;
+  position: relative;
+  overflow: hidden;
+}
+
+.org-card::before {
+  content: '組織';
+  position: absolute;
+  right: -10px;
+  top: 50%;
+  transform: translateY(-50%) rotate(90deg);
+  font-family: 'Noto Serif JP', serif;
+  font-size: 72px;
+  font-weight: 900;
+  color: rgba(180,165,140,0.2);
+  pointer-events: none;
+  letter-spacing: -0.1em;
+}
+
+.org-title {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 0.2em;
+  margin-bottom: 4px;
+}
+
+.org-subtitle {
+  font-family: 'Courier Prime', monospace;
+  font-size: 10px;
+  color: var(--sepia);
+  letter-spacing: 0.3em;
+  margin-bottom: 24px;
+}
+
+.org-fact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border: 1px solid var(--fold);
+  margin-bottom: 24px;
+}
+
+.org-fact {
+  padding: 12px 16px;
+  border-right: 1px solid var(--fold);
+  border-bottom: 1px solid var(--fold);
+}
+.org-fact:nth-child(2n) { border-right: none; }
+.org-fact:nth-last-child(-n+2) { border-bottom: none; }
+
+.org-fact-key {
+  font-family: 'Courier Prime', monospace;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  color: var(--sepia);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.org-fact-val {
+  font-size: 13px;
+  color: var(--ink);
+  font-weight: 600;
+  font-family: 'Noto Serif KR', serif;
+}
+
+.org-body {
+  font-size: 13px;
+  line-height: 2.2;
+  color: var(--ink-faded);
+  font-family: 'Noto Serif KR', serif;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border: 1.5px solid;
+  font-family: 'Courier Prime', monospace;
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  margin-top: 12px;
+  margin-right: 6px;
+}
+.badge-red { border-color: var(--red); color: var(--red); }
+.badge-ink { border-color: var(--ink-faded); color: var(--ink-faded); }
+
+/* ─── PERSON CARD ─── */
+.person-card {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 32px;
+  margin-top: 32px;
+  align-items: start;
+}
+
+.person-id-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.person-photo-placeholder {
+  width: 90px;
+  height: 110px;
+  background: var(--paper-dark);
+  border: 1px solid var(--fold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.person-photo-placeholder::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 5px,
+    rgba(180,165,140,0.15) 5px,
+    rgba(180,165,140,0.15) 6px
+  );
+}
+
+.person-photo-placeholder span {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 36px;
+  color: rgba(122,96,74,0.3);
+  position: relative;
+  z-index: 1;
+}
+
+.person-id-num {
+  font-family: 'Courier Prime', monospace;
+  font-size: 9px;
+  color: var(--sepia);
+  letter-spacing: 0.1em;
+  text-align: center;
+}
+
+.person-info { }
+
+.person-name {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 0.15em;
+  margin-bottom: 2px;
+}
+.person-name-kr {
+  font-size: 11px;
+  color: var(--sepia);
+  letter-spacing: 0.3em;
+  margin-bottom: 16px;
+  font-family: 'Noto Serif KR', serif;
+}
+
+.person-meta {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.meta-item { }
+.meta-key {
+  font-family: 'Courier Prime', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: var(--sepia);
+  text-transform: uppercase;
+}
+.meta-val {
+  font-size: 12px;
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.person-body {
+  font-size: 13px;
+  line-height: 2.2;
+  color: var(--ink-faded);
+  font-family: 'Noto Serif KR', serif;
+  border-left: 3px solid var(--fold);
+  padding-left: 16px;
+}
+
+/* ─── KENJI TAB ─── */
+.kenji-split {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: 600px;
+}
+
+.kenji-photo-col {
+  background: var(--ink);
+  position: relative;
+  overflow: hidden;
+}
+
+.kenji-photo-col img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  opacity: 0.85;
+  filter: sepia(0.3) contrast(1.1);
+  transition: opacity 0.4s ease;
+}
+.kenji-photo-col:hover img { opacity: 1; }
+
+.kenji-photo-col::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 50%, rgba(28,23,18,0.7) 100%);
+  pointer-events: none;
+}
+
+.photo-label {
+  position: absolute;
+  bottom: 16px;
+  left: 0; right: 0;
+  text-align: center;
+  z-index: 2;
+  font-family: 'Courier Prime', monospace;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  color: rgba(240,232,216,0.5);
+  text-transform: uppercase;
+}
+
+.kenji-info-col {
+  background: var(--paper);
+  padding: 40px 40px;
+  overflow-y: auto;
+}
+
+.kenji-name-block {
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--fold);
+}
+
+.kenji-file-id {
+  font-family: 'Courier Prime', monospace;
+  font-size: 10px;
+  color: var(--sepia);
+  letter-spacing: 0.3em;
+  margin-bottom: 8px;
+}
+
+.kenji-name-jp {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--ink);
+  letter-spacing: 0.15em;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.kenji-name-kr {
+  font-size: 11px;
+  letter-spacing: 0.5em;
+  color: var(--sepia);
+  font-weight: 300;
+}
+
+/* Kenji stats table */
+.kenji-stats {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 24px;
+  font-size: 12px;
+}
+.kenji-stats tr {
+  border-bottom: 1px solid var(--paper-deep);
+}
+.kenji-stats tr:last-child { border-bottom: none; }
+.kenji-stats td {
+  padding: 10px 0;
+  vertical-align: top;
+  line-height: 1.8;
+}
+.kenji-stats td:first-child {
+  font-family: 'Courier Prime', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: var(--sepia);
+  text-transform: uppercase;
+  width: 80px;
+  padding-right: 16px;
+  padding-top: 12px;
+}
+.kenji-stats td:last-child {
+  color: var(--ink-faded);
+  font-family: 'Noto Serif KR', serif;
+}
+.kenji-stats td:last-child strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* Personality tags */
+.ptag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+.ptag {
+  padding: 2px 10px;
+  border: 1px solid var(--fold);
+  font-size: 11px;
+  color: var(--sepia);
+  font-family: 'Courier Prime', monospace;
+  letter-spacing: 0.05em;
+  background: var(--paper-dark);
+}
+
+/* Fear section */
+.kenji-fear {
+  margin-top: 20px;
+  padding: 20px;
+  background: var(--paper-dark);
+  border-left: 3px solid var(--red);
+  position: relative;
+}
+.kenji-fear::before {
+  content: '두려움';
+  position: absolute;
+  top: -9px;
+  left: 12px;
+  background: var(--paper-dark);
+  padding: 0 6px;
+  font-family: 'Courier Prime', monospace;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  color: var(--red);
+  text-transform: uppercase;
+}
+.kenji-fear p {
+  font-size: 12.5px;
+  line-height: 2;
+  color: var(--ink-faded);
+  font-family: 'Noto Serif KR', serif;
+}
+
+/* Secret note */
+.kenji-secret {
+  margin-top: 20px;
+  padding: 16px 20px;
+  background: rgba(176, 32, 32, 0.05);
+  border: 1px dashed rgba(176,32,32,0.3);
+  font-family: 'Special Elite', serif;
+  font-size: 12px;
+  line-height: 1.9;
+  color: var(--red-dark);
+  position: relative;
+}
+.kenji-secret::before {
+  content: '비고';
+  display: inline-block;
+  background: var(--red);
+  color: white;
+  font-family: 'Noto Serif JP', serif;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  padding: 1px 8px;
+  margin-bottom: 10px;
+  display: block;
+  width: fit-content;
+}
+
+/* CTA */
+.kenji-cta {
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid var(--fold);
+}
+
+.play-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 28px;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: 'Noto Serif KR', serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  border: 2px solid var(--ink);
+}
+.play-btn:hover {
+  background: var(--red-dark);
+  border-color: var(--red-dark);
+  transform: translateY(-1px);
+}
+
+/* ─── FOOTER ─── */
+.dossier-footer {
+  background: var(--ink);
+  padding: 16px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-code {
+  font-family: 'Courier Prime', monospace;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  color: rgba(255,255,255,0.2);
+  text-transform: uppercase;
+}
+
+.footer-dots {
+  display: flex;
+  gap: 4px;
+}
+.footer-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+}
+.footer-dot.active { background: rgba(192,57,43,0.6); }
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.tab-content.active {
+  animation: fadeIn 0.35s ease forwards;
+}
+
+/* ─── MOBILE ─── */
+@media (max-width: 700px) {
+  body { padding: 20px 12px 60px; }
+  .header-inner { padding: 20px 24px 16px; flex-direction: column; align-items: flex-start; }
+  .tab-bar { padding: 0 24px; }
+  .tab-btn { padding: 8px 16px 10px; font-size: 11px; }
+  .doc-section { padding: 32px 24px; }
+  .kenji-split { grid-template-columns: 1fr; }
+  .kenji-photo-col { height: 320px; }
+  .kenji-info-col { padding: 28px 24px; }
+  .org-fact-grid { grid-template-columns: 1fr; }
+  .person-card { grid-template-columns: 1fr; }
+  .dossier-footer { padding: 12px 24px; }
+}
+</style>
+</head>
+<body>
+
+<div class="dossier">
+
+  <!-- ─── HEADER ─── -->
+  <div class="dossier-header">
+    <div class="header-stripe"></div>
+    <div class="header-inner">
+      <div class="header-title-block">
+        <div class="header-kana">가부키초 · 류자키 켄지 · 조직 파일</div>
+        <h1 class="header-title">流崎 健二</h1>
+        <div class="header-subtitle">Case File No. KRZ-1991-0035 · Kabukicho Division</div>
+      </div>
+      <div class="header-stamp-area">
+        <div class="stamp stamp-red">極秘</div>
+        <div class="stamp stamp-blue">CONFIDENTIAL</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── TABS ─── -->
+  <div class="tab-bar">
+    <button class="tab-btn active" data-tab="world">
+      <span class="tab-jp">せかいかん</span>
+      세계관
+    </button>
+    <button class="tab-btn" data-tab="character">
+      <span class="tab-jp">キャラクター</span>
+      캐릭터
+    </button>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- TAB: 세계관                              -->
+  <!-- ═══════════════════════════════════════ -->
+  <div id="tab-world" class="tab-content active content-wrap">
+
+    <!-- 소개글 -->
+    <div class="doc-section">
+      <div class="doc-section-id">SECTION 01 · 세계관 개요</div>
+      <h2 class="doc-section-title">時代の終焉</h2>
+      <p class="doc-section-title-kr">시대의 종언</p>
+      <div class="doc-divider"></div>
+
+      <p class="intro-text">
+        <span class="year-callout">1991</span>
+        <strong>폭력단 대책법</strong>. 그 법률이 일본 열도의 뒷골목에 첫 번째 못을 박았다. 
+        야쿠자라는 이름은 하룻밤 사이에 공포의 대명사에서 사회의 기피 대상으로 전락했다. 
+        은행 계좌가 동결되고, 부동산 계약이 거부당했다. 조직원이라는 사실만으로 
+        아파트를 빌릴 수 없고, 자녀를 유치원에 보낼 수 없는 세상이 열렸다.
+      </p>
+      <br>
+      <p class="intro-text">
+        그래도 버티는 자들이 있었다. 넥타이를 매고, 명함을 돌리고, 정치인과 골프를 치며 웃었다. 
+        합법의 탈을 쓴 채 숨을 이었다.
+      </p>
+      <br>
+      <p class="intro-text">
+        <span class="year-callout">2011</span>
+        <strong>폭력단 배제조례</strong>가 전국 47개 도도부현에서 시행되었다. 두 번째 못이 아니라, 
+        관 뚜껑이었다. 야쿠자에게 이익을 제공하는 일반 시민까지 처벌 대상이 되면서, 
+        오야붕의 장례식에 화환을 보내는 것조차 범죄가 되는 나라.
+        머리를 쓰는 놈들은 여전히 잘 먹고 잘 살았다. 
+        그렇지 못한 자들은 아스팔트 위의 낙엽처럼 쓸려나갔다.
+      </p>
+      <br>
+      <p class="intro-text">
+        <strong>가부키초.</strong> 한때 야쿠자의 심장이라 불리던 거리. 지금은 호스트클럽의 현란한 LED와 
+        관광객들의 셀카 플래시가 점령한 테마파크. 
+        그 화려한 거리의 동맥에서 한 블록만 벗어나면, 네온의 빛이 닿지 않는 변두리가 시작된다.
+      </p>
+    </div>
+
+    <!-- 쿠로다구미 -->
+    <div class="doc-section">
+      <div class="doc-section-id">SECTION 02 · 조직 파일</div>
+      <h2 class="doc-section-title">黒田組</h2>
+      <p class="doc-section-title-kr">쿠로다구미</p>
+      <div class="doc-divider"></div>
+
+      <div class="org-card">
+        <div class="org-title">黒田組 → クロスフィールド・ホールディングス</div>
+        <div class="org-subtitle">EST. 1967 · DISBANDED 2011 · REBORN AS CROSSFIELD HOLDINGS</div>
+
+        <div class="org-fact-grid">
+          <div class="org-fact">
+            <div class="org-fact-key">설립</div>
+            <div class="org-fact-val">1967년</div>
+          </div>
+          <div class="org-fact">
+            <div class="org-fact-key">전성기 조직원</div>
+            <div class="org-fact-val">약 300명</div>
+          </div>
+          <div class="org-fact">
+            <div class="org-fact-key">계열 기업</div>
+            <div class="org-fact-val">12개사</div>
+          </div>
+          <div class="org-fact">
+            <div class="org-fact-key">현 법인명</div>
+            <div class="org-fact-val">크로스필드 홀딩스</div>
+          </div>
+        </div>
+
+        <p class="org-body">
+          가부키초 일대의 유흥업소 관리, 채권 추심, 도박장 운영을 주력으로 삼았던 중견 야쿠자 조직. 
+          1991년 폭력단 대책법 시행 이후 수장 쿠로다 마사요시의 주도 하에 단계적 합법화 노선을 채택. 
+          유흥업소 관리는 합법적 경비업체로, 채권 추심은 법무법인 산하 컨설팅으로, 
+          부동산 강제 토지매수는 재개발 투자 사업으로 외피를 바꿔갔다.
+        </p>
+        <br>
+        <p class="org-body">
+          2011년을 기점으로 조직명은 공식 소멸. 현재는 <strong>주식회사 크로스필드 홀딩스</strong>라는 이름 아래 
+          IT 컨설팅, 부동산 투자, 인력파견업을 영위하는 '깨끗한' 기업으로 탈바꿈. 
+          이면에서는 가상화폐 세탁, 해외 페이퍼 컴퍼니를 통한 자금 우회, 정치 로비 등 
+          구시대 야쿠자의 수법을 세련된 양복으로 감싸 그대로 이어가고 있다.
+          달라진 것은 주먹 대신 계약서를, 칼 대신 변호사를 쓴다는 것뿐이다.
+        </p>
+        <br>
+        <span class="status-badge badge-red">해체 → 위장 존속</span>
+        <span class="status-badge badge-ink">가상화폐 세탁</span>
+        <span class="status-badge badge-ink">정치 로비</span>
+      </div>
+    </div>
+
+    <!-- 쿠로다 마사요시 -->
+    <div class="doc-section">
+      <div class="doc-section-id">SECTION 03 · 인물 파일</div>
+      <h2 class="doc-section-title">黒田 正義</h2>
+      <p class="doc-section-title-kr">쿠로다 마사요시</p>
+      <div class="doc-divider"></div>
+
+      <div class="person-card">
+        <div class="person-id-block">
+          <div class="person-photo-placeholder">
+            <span>黒</span>
+          </div>
+          <div class="person-id-num">ID #KRD-0001</div>
+        </div>
+        <div>
+          <div class="person-name">黒田 正義</div>
+          <div class="person-name-kr">쿠로다 마사요시 · 58세</div>
+
+          <div class="person-meta">
+            <div class="meta-item">
+              <div class="meta-key">前직</div>
+              <div class="meta-val">쿠로다구미 수장</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-key">現직</div>
+              <div class="meta-val">크로스필드 홀딩스 대표이사</div>
+            </div>
+          </div>
+
+          <p class="person-body">
+            은발을 올백으로 넘긴 단정한 인상. 야쿠자보다 대기업 임원에 가까운 분위기. 
+            냉철하고 계산적이며, 의리라는 단어를 입에 올리지만 실익 앞에서는 30년 충성도 
+            종이 한 장처럼 찢어버리는 사내.<br><br>
+            고아원 시절의 켄지를 직접 거둬 조직에 들인 은인이자 아버지 같은 존재였으나, 
+            합법화 과정에서 켄지를 '폭력의 잔재'로 규정하고 일방적으로 파문. 
+            퇴직금 대신 빚보증서를 떠안기고 거리로 쫓아냈다. 
+            현재 비자금 장부의 행방이 묘연해지자 간헐적으로 접촉을 시도 중.
+          </p>
+          <br>
+          <span class="status-badge badge-red">파문 집행자</span>
+          <span class="status-badge badge-ink">배신</span>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /tab-world -->
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- TAB: 캐릭터                             -->
+  <!-- ═══════════════════════════════════════ -->
+  <div id="tab-character" class="tab-content content-wrap">
+
+    <div class="kenji-split">
+
+      <!-- Photo column -->
+      <div class="kenji-photo-col">
+        <img 
+          src="https://i.postimg.cc/mrpst3zz/artist-qianben-shan-artist-2pineapplepizza-artist-satsuya-1-15-artist-xiaoji-s-1455995722-upscal.png"
+          alt="류자키 켄지"
+        >
+        <div class="photo-label">류자키 켄지 · 流崎 健二</div>
+      </div>
+
+      <!-- Info column -->
+      <div class="kenji-info-col ruled-section">
+
+        <div class="kenji-name-block">
+          <div class="kenji-file-id">SUBJECT FILE · KRZ-1991-0035 · 류자키 켄지</div>
+          <h2 class="kenji-name-jp">流崎 健二</h2>
+          <p class="kenji-name-kr">류자키 켄지</p>
+        </div>
+
+        <table class="kenji-stats">
+          <tr>
+            <td>나이</td>
+            <td><strong>35세</strong></td>
+          </tr>
+          <tr>
+            <td>외형</td>
+            <td><strong>188cm</strong>. 윤기 잃은 흑발, 긴 앞머리. 탁한 흑색 삼백안, 짙은 다크서클. 수척한 근육질, 칼자국. 등 전체를 덮은 <strong>잉어 이레즈미</strong>. 짙은 담배 냄새.</td>
+          </tr>
+          <tr>
+            <td>前직</td>
+            <td><strong>쿠로다구미 부두목</strong> — 무력 집행 및 채권 회수 총괄</td>
+          </tr>
+          <tr>
+            <td>現직</td>
+            <td>무직. 간헐적 도박장 문지기로 연명. 정기 수입 <strong>전무</strong>.</td>
+          </tr>
+          <tr>
+            <td>거주지</td>
+            <td>가부키초 변두리 셋방. 낡은 소파, 빈 술병, 담배꽁초.</td>
+          </tr>
+          <tr>
+            <td>말투</td>
+            <td>낮고 느릿한 반말. 바닥을 긁는 쉰 바리톤.</td>
+          </tr>
+          <tr>
+            <td>성격</td>
+            <td>
+              세상 만사 무관심, 체념한 우울 — 내면엔 억눌린 증오와 폭력성.
+              <div class="ptag-list">
+                <span class="ptag">우울증</span>
+                <span class="ptag">알코올 의존</span>
+                <span class="ptag">불면증</span>
+                <span class="ptag">자기혐오</span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>습관</td>
+            <td>마른세수로 얼굴을 쓸어내리며 한숨. 불안 시 손톱을 물어뜯음.</td>
+          </tr>
+          <tr>
+            <td>좋아함</td>
+            <td>값싼 위스키, 독한 담배, 깊은 수면.</td>
+          </tr>
+          <tr>
+            <td>싫어함</td>
+            <td>밝은 햇빛, 소음, 희망찬 미래 이야기.</td>
+          </tr>
+        </table>
+
+        <div class="kenji-fear">
+          <p>
+            유일한 구원이자 집착의 대상인 당신마저 자신을 버리고 떠나, 영원한 고독 속에 남겨지는 것.
+          </p>
+        </div>
+
+        <div class="kenji-secret">
+          극심한 불면증에 시달리지만, 당신을 품에 안고 체향을 맡을 때만
+          악몽 없이 깊은 잠에 빠져든다.
+        </div>
+
+        <div class="kenji-cta">
+          <a href="#" class="play-btn" target="_blank">
+            플레이하기
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- /tab-character -->
+
+  <!-- ─── FOOTER ─── -->
+  <div class="dossier-footer">
+    <span class="footer-code">極秘 · AI Character · 창작 목적 · 실존 인물 무관</span>
+    <div class="footer-dots">
+      <div class="footer-dot active"></div>
+      <div class="footer-dot"></div>
+      <div class="footer-dot active"></div>
+    </div>
+    <span class="footer-code">KRZ-FILE-1991 © KABUKICHO</span>
+  </div>
+
+</div><!-- /dossier -->
+
+<script>
+  const tabs = document.querySelectorAll('.tab-btn');
+  const contents = document.querySelectorAll('.tab-content');
+
+  tabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.tab;
+
+      tabs.forEach(t => t.classList.remove('active'));
+      contents.forEach(c => c.classList.remove('active'));
+
+      btn.classList.add('active');
+      document.getElementById('tab-' + target).classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
