@@ -3,1069 +3,1139 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>極秘 — 류자키 켄지 파일</title>
+<title>流崎 健二 — 가부키초</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Serif+JP:wght@300;400;700;900&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700;800&family=DM+Serif+Display:ital@0;1&family=Noto+Serif+KR:wght@400;500;600;700;900&family=Noto+Serif+JP:wght@400;500;600;700;900&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --paper: #ede8de;
-  --paper-dark: #ddd5c4;
-  --paper-deep: #cfc5b2;
-  --ink: #1c1712;
-  --ink-faded: #4a3f32;
-  --sepia: #8a7060;
-  --red: #b02020;
-  --red-dark: #7a1515;
-  --red-stamp: #c0392b;
-  --blue-stamp: #1a3a6b;
-  --fold: #c8bfaa;
+  --bg:       #0c0d10;
+  --bg2:      #111318;
+  --bg3:      #181a20;
+  --white:    #f0ede6;
+  --off:      #b8b3a8;
+  --dim:      #6b6660;
+  --red:      #c0392b;
+  --red-dim:  #7a2318;
+  --line:     rgba(240,237,230,0.08);
+  --line2:    rgba(240,237,230,0.04);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 html { scroll-behavior: smooth; }
 
 body {
-  background: #2a2318;
+  background: var(--bg);
+  color: var(--white);
   font-family: 'Noto Serif KR', serif;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 24px 12px 80px;
-  position: relative;
+  overflow-x: hidden;
 }
 
-/* Desk surface texture */
-body::before {
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--red-dim); }
+
+body::after {
   content: '';
   position: fixed;
   inset: 0;
-  background-image:
-    repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.03) 3px, rgba(0,0,0,0.03) 4px),
-    repeating-linear-gradient(90deg, transparent, transparent 3px, rgba(0,0,0,0.02) 3px, rgba(0,0,0,0.02) 4px);
   pointer-events: none;
-  z-index: 0;
+  z-index: 9999;
+  opacity: 0.2;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.08'/%3E%3C/svg%3E");
 }
 
-/* ─── OUTER WRAPPER (dossier cover) ─── */
-.dossier {
-  width: 100%;
-  max-width: 1200px;
-  position: relative;
-  z-index: 1;
-  filter: drop-shadow(0 30px 80px rgba(0,0,0,0.7));
-}
-
-/* Paper texture overlay */
-.paper-texture {
-  background: var(--paper);
-  position: relative;
-}
-.paper-texture::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events: none;
-  mix-blend-mode: multiply;
-}
-
-/* ─── HEADER ─── */
-.dossier-header {
-  background: var(--ink);
-  padding: 0;
+/* ══ HEADER ═══════════════════════════════════ */
+.masthead {
+  border-bottom: 1px solid var(--line);
   position: relative;
   overflow: hidden;
 }
 
-.header-stripe {
-  height: 6px;
-  background: repeating-linear-gradient(
-    90deg,
-    var(--red) 0px, var(--red) 40px,
-    var(--ink) 40px, var(--ink) 50px
-  );
-}
-
-.header-inner {
-  padding: 28px 48px 24px;
+.masthead-top {
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 24px;
+  align-items: stretch;
+  min-height: 340px;
 }
 
-.header-title-block { }
-
-.header-kana {
-  font-family: 'Noto Serif JP', serif;
-  font-size: 10px;
-  letter-spacing: 0.5em;
-  color: rgba(255,255,255,0.3);
-  margin-bottom: 8px;
-  font-weight: 300;
+.masthead-accent {
+  width: 8px;
+  background: var(--red);
+  flex-shrink: 0;
+  position: relative;
+}
+.masthead-accent::after {
+  content: '';
+  position: absolute;
+  top: 0; right: -40px;
+  width: 40px; height: 100%;
+  background: linear-gradient(90deg, rgba(192,57,43,0.14), transparent);
 }
 
-.header-title {
-  font-family: 'Noto Serif JP', serif;
-  font-size: clamp(28px, 5vw, 48px);
-  font-weight: 900;
-  color: #f0e8d8;
-  letter-spacing: 0.15em;
-  line-height: 1;
-}
-
-.header-subtitle {
-  font-family: 'Courier Prime', monospace;
-  font-size: 11px;
-  color: rgba(255,255,255,0.25);
-  letter-spacing: 0.3em;
-  margin-top: 10px;
-  text-transform: uppercase;
-}
-
-.header-stamp-area {
+.masthead-title-block {
+  flex: 1;
+  padding: 48px 64px 40px;
+  position: relative;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  gap: 8px;
-  flex-shrink: 0;
+  justify-content: flex-end;
 }
 
-.stamp {
-  font-family: 'Noto Serif JP', serif;
-  font-weight: 900;
-  border: 3px solid;
-  display: inline-block;
-  transform: rotate(-8deg);
-  letter-spacing: 0.1em;
+.masthead-title-block::before {
+  content: '流崎';
+  position: absolute;
+  right: 180px;
+  top: -20px;
+  font-family: 'Shippori Mincho', serif;
+  font-weight: 800;
+  font-size: 280px;
+  color: rgba(240,237,230,0.025);
   line-height: 1;
+  pointer-events: none;
+  user-select: none;
 }
-.stamp-red {
-  color: rgba(192,57,43,0.7);
-  border-color: rgba(192,57,43,0.6);
-  padding: 6px 10px;
-  font-size: 20px;
-}
-.stamp-blue {
-  color: rgba(100,140,200,0.5);
-  border-color: rgba(100,140,200,0.4);
-  padding: 4px 8px;
+
+.masthead-eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 10px;
-  letter-spacing: 0.2em;
-  transform: rotate(5deg);
-}
-
-/* ─── FOLDER TABS ─── */
-.tab-bar {
+  font-weight: 400;
+  letter-spacing: 0.45em;
+  color: var(--red);
+  text-transform: uppercase;
+  margin-bottom: 20px;
   display: flex;
-  padding: 0 48px;
-  background: var(--ink);
-  gap: 4px;
-  align-items: flex-end;
+  align-items: center;
+  gap: 16px;
+}
+.masthead-eyebrow::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: var(--red);
 }
 
-.tab-btn {
-  padding: 10px 28px 12px;
-  font-family: 'Noto Serif KR', serif;
+.masthead-name-jp {
+  font-family: 'Shippori Mincho', serif;
+  font-size: clamp(52px, 8vw, 96px);
+  font-weight: 800;
+  color: var(--white);
+  letter-spacing: 0.06em;
+  line-height: 1;
+  margin-bottom: 12px;
+}
+
+.masthead-name-kr {
+  font-size: clamp(14px, 2vw, 18px);
+  font-weight: 400;
+  color: var(--dim);
+  letter-spacing: 0.55em;
+  margin-bottom: 36px;
+}
+
+.masthead-meta-row {
+  display: flex;
+  gap: 0;
+  border-top: 1px solid var(--line);
+  padding-top: 20px;
+  flex-wrap: wrap;
+}
+
+.masthead-meta-item {
+  padding-right: 28px;
+  margin-right: 28px;
+  border-right: 1px solid var(--line);
+}
+.masthead-meta-item:last-child { border-right: none; }
+
+.meta-k {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  color: var(--dim);
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+.meta-v {
   font-size: 13px;
   font-weight: 600;
-  letter-spacing: 0.15em;
+  color: var(--white);
+}
+
+.masthead-photo {
+  width: 280px;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+.masthead-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  filter: grayscale(0.2) contrast(1.1);
+  transition: filter 0.5s ease, transform 0.6s ease;
+}
+.masthead-photo:hover img {
+  filter: grayscale(0) contrast(1.05);
+  transform: scale(1.03);
+}
+.masthead-photo::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(12,13,16,0.35) 0%, transparent 40%);
+  z-index: 1;
+  pointer-events: none;
+}
+.masthead-photo::after {
+  content: '流崎 健二';
+  position: absolute;
+  bottom: 14px;
+  left: 0; right: 0;
+  text-align: center;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  color: rgba(240,237,230,0.35);
+  z-index: 2;
+}
+
+/* ══ TAB NAV ══════════════════════════════════ */
+.tab-nav {
+  display: flex;
+  align-items: stretch;
+  border-bottom: 1px solid var(--line);
+  background: var(--bg2);
+  padding: 0 72px;
+}
+
+.tab-nav-btn {
+  padding: 18px 0;
+  margin-right: 48px;
+  background: none;
   border: none;
   cursor: pointer;
   position: relative;
-  transition: all 0.2s ease;
-  outline: none;
-}
-
-.tab-btn.active {
-  background: var(--paper);
-  color: var(--ink);
-}
-
-.tab-btn:not(.active) {
-  background: #2e2a20;
-  color: rgba(255,255,255,0.35);
-}
-.tab-btn:not(.active):hover {
-  background: #3a352a;
-  color: rgba(255,255,255,0.55);
-}
-
-.tab-btn .tab-jp {
-  font-family: 'Noto Serif JP', serif;
-  font-size: 9px;
-  letter-spacing: 0.3em;
-  display: block;
-  margin-bottom: 3px;
-  opacity: 0.6;
-}
-
-/* ─── TAB CONTENT AREA ─── */
-.tab-content {
-  display: none;
-}
-.tab-content.active {
-  display: block;
-}
-
-/* ─── CONTENT WRAPPER ─── */
-.content-wrap {
-  background: var(--paper);
-  padding: 0;
-  position: relative;
-}
-
-/* Ruled lines */
-.ruled-section {
-  background-image: repeating-linear-gradient(
-    180deg,
-    transparent,
-    transparent 31px,
-    rgba(180,165,140,0.35) 31px,
-    rgba(180,165,140,0.35) 32px
-  );
-  background-position: 0 16px;
-}
-
-/* ─── SECTION HEADERS ─── */
-.doc-section {
-  padding: 48px 48px 40px;
-  border-bottom: 2px solid var(--paper-deep);
-  position: relative;
-}
-
-.doc-section:last-child { border-bottom: none; }
-
-.doc-section-id {
-  font-family: 'Courier Prime', monospace;
-  font-size: 10px;
-  color: var(--sepia);
-  letter-spacing: 0.3em;
-  margin-bottom: 6px;
-  text-transform: uppercase;
-}
-
-.doc-section-title {
-  font-family: 'Noto Serif JP', serif;
-  font-size: clamp(20px, 3vw, 28px);
-  font-weight: 900;
-  color: var(--ink);
-  letter-spacing: 0.1em;
-  margin-bottom: 4px;
-  line-height: 1.2;
-}
-
-.doc-section-title-kr {
-  font-size: 12px;
-  letter-spacing: 0.4em;
-  color: var(--sepia);
-  font-weight: 300;
-  margin-bottom: 28px;
   font-family: 'Noto Serif KR', serif;
-}
-
-.doc-divider {
-  width: 100%;
-  height: 1px;
-  background: var(--fold);
-  margin-bottom: 32px;
-}
-
-/* ─── WORLD INTRO ─── */
-.intro-text {
-  font-size: 14.5px;
-  line-height: 2.4;
-  color: var(--ink-faded);
+  font-size: 14px;
   font-weight: 600;
+  letter-spacing: 0.2em;
+  color: var(--dim);
+  transition: color 0.25s ease;
+  outline: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+.tab-nav-btn::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0; right: 0;
+  height: 2px;
+  background: var(--red);
+  transform: scaleX(0);
+  transition: transform 0.25s ease;
+}
+.tab-nav-btn.active { color: var(--white); }
+.tab-nav-btn.active::after { transform: scaleX(1); }
+.tab-nav-btn:not(.active):hover { color: var(--off); }
+
+.tab-nav-jp {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 9px;
+  letter-spacing: 0.4em;
+  color: var(--red-dim);
+  font-weight: 400;
+}
+.tab-nav-btn.active .tab-nav-jp { color: var(--red); }
+
+/* ══ PANELS ════════════════════════════════════ */
+.tab-panel { display: none; }
+.tab-panel.active {
+  display: block;
+  animation: panelIn 0.35s ease forwards;
+}
+@keyframes panelIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.panel-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 72px 80px;
+}
+
+/* ══ SECTION HEADER ════════════════════════════ */
+.sec-head {
+  padding: 64px 0 40px;
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 0 48px;
+  align-items: start;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 48px;
+}
+
+.sec-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  color: var(--red);
+  padding-top: 6px;
+  border-top: 1px solid var(--red);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.sec-num-sub {
+  font-size: 9px;
+  color: var(--dim);
+  letter-spacing: 0.25em;
+}
+.sec-title-jp {
+  font-family: 'Shippori Mincho', serif;
+  font-size: clamp(24px, 3.5vw, 38px);
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+.sec-title-kr {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--dim);
+  letter-spacing: 0.4em;
+}
+
+/* ══ BODY TEXT ═════════════════════════════════ */
+.body-text {
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 2.3;
+  color: var(--off);
   font-family: 'Noto Serif KR', serif;
-  max-width: 820px;
+}
+.body-text + .body-text { margin-top: 20px; }
+.body-text strong { color: var(--white); font-weight: 700; }
+
+.year-tag {
+  display: inline-block;
+  background: var(--red);
+  color: var(--white);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  padding: 2px 8px;
+  vertical-align: middle;
+  margin: 0 2px;
+}
+
+/* ══ PULL QUOTE ════════════════════════════════ */
+.pull-quote {
+  margin: 52px 0;
+  padding: 40px 48px;
+  border-left: 3px solid var(--red);
+  background: var(--bg3);
+  position: relative;
+  overflow: hidden;
+}
+.pull-quote::before {
+  content: '"';
+  position: absolute;
+  top: -24px; left: 28px;
+  font-family: 'DM Serif Display', serif;
+  font-size: 160px;
+  color: rgba(192,57,43,0.07);
+  line-height: 1;
+  pointer-events: none;
+}
+.pull-quote p {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(16px, 2.2vw, 22px);
+  font-style: italic;
+  color: var(--white);
+  line-height: 1.75;
   position: relative;
   z-index: 1;
 }
-
-.intro-text strong {
-  color: var(--ink);
-  font-weight: 700;
-}
-
-.year-callout {
-  display: inline-block;
-  background: var(--ink);
-  color: var(--paper);
-  font-family: 'Courier Prime', monospace;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  padding: 2px 8px;
-  margin: 0 4px;
-  vertical-align: middle;
-}
-
-.redacted {
-  display: inline-block;
-  background: var(--ink);
-  color: var(--ink);
-  padding: 0 6px;
-  min-width: 80px;
-  position: relative;
-}
-
-/* ─── ORGANIZATION CARD ─── */
-.org-card {
-  background: var(--paper-dark);
-  border: 1px solid var(--fold);
-  padding: 32px;
-  margin-top: 32px;
-  position: relative;
-  overflow: hidden;
-}
-
-.org-card::before {
-  content: '組織';
-  position: absolute;
-  right: -10px;
-  top: 50%;
-  transform: translateY(-50%) rotate(90deg);
-  font-family: 'Noto Serif JP', serif;
-  font-size: 72px;
-  font-weight: 900;
-  color: rgba(180,165,140,0.2);
-  pointer-events: none;
-  letter-spacing: -0.1em;
-}
-
-.org-title {
-  font-family: 'Noto Serif JP', serif;
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--ink);
-  letter-spacing: 0.2em;
-  margin-bottom: 4px;
-}
-
-.org-subtitle {
-  font-family: 'Courier Prime', monospace;
+.pull-quote-attr {
+  margin-top: 16px;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 10px;
-  color: var(--sepia);
-  letter-spacing: 0.3em;
-  margin-bottom: 24px;
-}
-
-.org-fact-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0;
-  border: 1px solid var(--fold);
-  margin-bottom: 24px;
-}
-
-.org-fact {
-  padding: 12px 16px;
-  border-right: 1px solid var(--fold);
-  border-bottom: 1px solid var(--fold);
-}
-.org-fact:nth-child(2n) { border-right: none; }
-.org-fact:nth-last-child(-n+2) { border-bottom: none; }
-
-.org-fact-key {
-  font-family: 'Courier Prime', monospace;
-  font-size: 9px;
-  letter-spacing: 0.3em;
-  color: var(--sepia);
-  text-transform: uppercase;
-  margin-bottom: 4px;
-}
-.org-fact-val {
-  font-size: 13px;
-  color: var(--ink);
-  font-weight: 600;
-  font-family: 'Noto Serif KR', serif;
-}
-
-.org-body {
-  font-size: 14px;
-  line-height: 2.2;
-  color: var(--ink-faded);
-  font-family: 'Noto Serif KR', serif;
-  font-weight: 600;
-}
-
-.status-badge {
-  display: inline-block;
-  padding: 3px 10px;
-  border: 1.5px solid;
-  font-family: 'Courier Prime', monospace;
-  font-size: 9px;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  margin-top: 12px;
-  margin-right: 6px;
-}
-.badge-red { border-color: var(--red); color: var(--red); }
-.badge-ink { border-color: var(--ink-faded); color: var(--ink-faded); }
-
-/* ─── PERSON CARD ─── */
-.person-card {
-  display: grid;
-  grid-template-columns: 100px 1fr;
-  gap: 32px;
-  margin-top: 32px;
-  align-items: start;
-}
-
-.person-id-block {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-}
-
-.person-photo-placeholder {
-  width: 90px;
-  height: 110px;
-  border: 1px solid var(--fold);
-  overflow: hidden;
-  position: relative;
-}
-
-.person-photo-placeholder img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top center;
-  display: block;
-  filter: sepia(0.2) contrast(1.05);
-}
-
-.person-id-num {
-  font-family: 'Courier Prime', monospace;
-  font-size: 9px;
-  color: var(--sepia);
-  letter-spacing: 0.1em;
-  text-align: center;
-}
-
-.person-info { }
-
-.person-name {
-  font-family: 'Noto Serif JP', serif;
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--ink);
-  letter-spacing: 0.15em;
-  margin-bottom: 2px;
-}
-.person-name-kr {
-  font-size: 11px;
-  color: var(--sepia);
-  letter-spacing: 0.3em;
-  margin-bottom: 16px;
-  font-family: 'Noto Serif KR', serif;
-}
-
-.person-meta {
-  display: flex;
-  gap: 24px;
-  margin-bottom: 16px;
-  flex-wrap: wrap;
-}
-
-.meta-item { }
-.meta-key {
-  font-family: 'Courier Prime', monospace;
-  font-size: 9px;
-  letter-spacing: 0.2em;
-  color: var(--sepia);
-  text-transform: uppercase;
-}
-.meta-val {
-  font-size: 12px;
-  color: var(--ink);
-  font-weight: 600;
-}
-
-.person-body {
-  font-size: 14px;
-  line-height: 2.2;
-  color: var(--ink-faded);
-  font-family: 'Noto Serif KR', serif;
-  border-left: 3px solid var(--fold);
-  padding-left: 16px;
-  font-weight: 600;
-}
-
-/* ─── KENJI TAB ─── */
-.kenji-split {
-  display: grid;
-  grid-template-columns: 240px 1fr;
-  min-height: 600px;
-}
-
-.kenji-photo-col {
-  background: var(--ink);
-  position: relative;
-  overflow: hidden;
-}
-
-.kenji-photo-col img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top center;
-  display: block;
-  opacity: 0.85;
-  filter: sepia(0.3) contrast(1.1);
-  transition: opacity 0.4s ease;
-}
-.kenji-photo-col:hover img { opacity: 1; }
-
-.kenji-photo-col::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, transparent 50%, rgba(28,23,18,0.7) 100%);
-  pointer-events: none;
-}
-
-.photo-label {
-  position: absolute;
-  bottom: 16px;
-  left: 0; right: 0;
-  text-align: center;
-  z-index: 2;
-  font-family: 'Courier Prime', monospace;
-  font-size: 9px;
-  letter-spacing: 0.3em;
-  color: rgba(240,232,216,0.5);
-  text-transform: uppercase;
-}
-
-.kenji-info-col {
-  background: var(--paper);
-  padding: 40px 40px;
-  overflow-y: auto;
-}
-
-.kenji-name-block {
-  margin-bottom: 24px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid var(--fold);
-}
-
-.kenji-file-id {
-  font-family: 'Courier Prime', monospace;
-  font-size: 10px;
-  color: var(--sepia);
-  letter-spacing: 0.3em;
-  margin-bottom: 8px;
-}
-
-.kenji-name-jp {
-  font-family: 'Noto Serif JP', serif;
-  font-size: 28px;
-  font-weight: 900;
-  color: var(--ink);
-  letter-spacing: 0.15em;
-  line-height: 1;
-  margin-bottom: 4px;
-}
-.kenji-name-kr {
-  font-size: 11px;
-  letter-spacing: 0.5em;
-  color: var(--sepia);
-  font-weight: 300;
-}
-
-/* Kenji stats table */
-.kenji-stats {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 24px;
-  font-size: 13.5px;
-}
-.kenji-stats tr {
-  border-bottom: 1px solid var(--paper-deep);
-}
-.kenji-stats tr:last-child { border-bottom: none; }
-.kenji-stats td {
-  padding: 10px 0;
-  vertical-align: top;
-  line-height: 1.8;
-}
-.kenji-stats td:first-child {
-  font-family: 'Courier Prime', monospace;
-  font-size: 9px;
-  letter-spacing: 0.2em;
-  color: var(--sepia);
-  text-transform: uppercase;
-  width: 80px;
-  padding-right: 16px;
-  padding-top: 12px;
-}
-.kenji-stats td:last-child {
-  color: var(--ink-faded);
-  font-family: 'Noto Serif KR', serif;
-  font-weight: 600;
-}
-.kenji-stats td:last-child strong {
-  color: var(--ink);
-  font-weight: 700;
-}
-
-/* Personality tags */
-.ptag-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 4px;
-}
-.ptag {
-  padding: 2px 10px;
-  border: 1px solid var(--fold);
-  font-size: 11px;
-  color: var(--sepia);
-  font-family: 'Courier Prime', monospace;
-  letter-spacing: 0.05em;
-  background: var(--paper-dark);
-}
-
-/* Fear section */
-.kenji-fear {
-  margin-top: 20px;
-  padding: 20px;
-  background: var(--paper-dark);
-  border-left: 3px solid var(--red);
-  position: relative;
-}
-.kenji-fear::before {
-  content: '두려움';
-  position: absolute;
-  top: -9px;
-  left: 12px;
-  background: var(--paper-dark);
-  padding: 0 6px;
-  font-family: 'Courier Prime', monospace;
-  font-size: 9px;
   letter-spacing: 0.3em;
   color: var(--red);
   text-transform: uppercase;
 }
-.kenji-fear p {
-  font-size: 13.5px;
-  line-height: 2;
-  color: var(--ink-faded);
-  font-family: 'Noto Serif KR', serif;
-  font-weight: 600;
-}
 
-/* Secret note */
-.kenji-secret {
-  margin-top: 20px;
-  padding: 16px 20px;
-  background: rgba(176, 32, 32, 0.05);
-  border: 1px dashed rgba(176,32,32,0.3);
-  font-family: 'Special Elite', serif;
-  font-size: 13.5px;
-  line-height: 1.9;
-  color: var(--red-dark);
-  position: relative;
+/* ══ ORG BLOCK ═════════════════════════════════ */
+.org-block {
+  background: var(--bg2);
+  border: 1px solid var(--line);
+  border-top: 2px solid var(--red);
+  margin-bottom: 48px;
 }
-.kenji-secret::before {
-  content: '비고';
-  display: inline-block;
-  background: var(--red);
-  color: white;
-  font-family: 'Noto Serif JP', serif;
-  font-size: 9px;
-  letter-spacing: 0.2em;
-  padding: 1px 8px;
-  margin-bottom: 10px;
-  display: block;
-  width: fit-content;
+.org-header {
+  padding: 28px 40px;
+  border-bottom: 1px solid var(--line);
 }
-
-/* CTA */
-.kenji-cta {
-  margin-top: 28px;
-  padding-top: 24px;
-  border-top: 1px solid var(--fold);
+.org-name-jp {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: 0.12em;
+  margin-bottom: 6px;
 }
-
-.play-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 13px 28px;
-  background: var(--ink);
-  color: var(--paper);
-  font-family: 'Noto Serif KR', serif;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.2em;
-  text-decoration: none;
-  transition: all 0.25s ease;
-  border: 2px solid var(--ink);
+.org-name-en {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  color: var(--dim);
+  text-transform: uppercase;
 }
-.play-btn:hover {
-  background: var(--red-dark);
-  border-color: var(--red-dark);
-  transform: translateY(-1px);
+.org-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-bottom: 1px solid var(--line);
 }
-
-/* ─── FOOTER ─── */
-.dossier-footer {
-  background: var(--ink);
-  padding: 16px 48px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.org-stat {
+  padding: 20px 28px;
+  border-right: 1px solid var(--line);
 }
-
-.footer-code {
-  font-family: 'Courier Prime', monospace;
+.org-stat:last-child { border-right: none; }
+.org-stat-k {
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 9px;
   letter-spacing: 0.3em;
-  color: rgba(255,255,255,0.2);
+  color: var(--dim);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.org-stat-v {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--white);
+}
+.org-body {
+  padding: 32px 40px;
+}
+.org-body p {
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 2.2;
+  color: var(--off);
+  font-family: 'Noto Serif KR', serif;
+}
+.org-body p + p { margin-top: 16px; }
+.org-body p strong { color: var(--white); font-weight: 700; }
+
+.badge-row { margin-top: 24px; display: flex; gap: 8px; flex-wrap: wrap; }
+.badge {
+  padding: 4px 14px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+.badge-r { border: 1px solid var(--red); color: var(--red); }
+.badge-g { border: 1px solid var(--dim); color: var(--dim); }
+
+/* ══ PERSON BLOCK ══════════════════════════════ */
+.person-block {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 48px;
+  align-items: start;
+  padding: 40px;
+  background: var(--bg2);
+  border: 1px solid var(--line);
+  margin-bottom: 48px;
+}
+.person-photo-wrap { position: relative; }
+.person-photo-wrap img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  filter: grayscale(0.1) contrast(1.1);
+}
+.person-photo-wrap::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 60px;
+  background: linear-gradient(transparent, var(--bg2));
+}
+.person-photo-id {
+  margin-top: 10px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  color: var(--dim);
+  text-align: center;
+  text-transform: uppercase;
+}
+.person-name-jp {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: 0.12em;
+  margin-bottom: 3px;
+}
+.person-name-kr {
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.4em;
+  color: var(--dim);
+  margin-bottom: 24px;
+}
+.person-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+}
+.person-meta-item {
+  padding-right: 24px;
+  margin-right: 24px;
+  border-right: 1px solid var(--line);
+  margin-bottom: 8px;
+}
+.person-meta-item:last-child { border-right: none; }
+.pmk {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  color: var(--dim);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.pmv { font-size: 13px; font-weight: 600; color: var(--white); }
+.person-desc {
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 2.2;
+  color: var(--off);
+  font-family: 'Noto Serif KR', serif;
+}
+.person-desc + .person-desc { margin-top: 14px; }
+
+.red-rule {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, var(--red), rgba(192,57,43,0.1));
+  margin: 48px 0;
+}
+.section-gap { margin-bottom: 64px; }
+
+/* ══ CHARACTER TAB ═════════════════════════════ */
+.char-layout {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  min-height: calc(100vh - 397px);
+  margin: 0 -72px;
+}
+.char-photo-col {
+  position: relative;
+  overflow: hidden;
+  background: var(--bg2);
+  min-height: 700px;
+}
+.char-photo-col img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  filter: contrast(1.05) saturate(0.9);
+  transition: transform 0.8s ease, filter 0.5s ease;
+}
+.char-photo-col:hover img {
+  transform: scale(1.04);
+  filter: contrast(1) saturate(1.05);
+}
+.char-photo-col::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, transparent 55%, var(--bg2) 100%),
+    linear-gradient(180deg, rgba(12,13,16,0.15) 0%, transparent 25%, transparent 65%, rgba(12,13,16,0.55) 100%);
+  pointer-events: none;
+}
+.char-photo-label {
+  position: absolute;
+  bottom: 32px;
+  left: 32px;
+  z-index: 2;
+}
+.char-photo-label-jp {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(240,237,230,0.65);
+  letter-spacing: 0.3em;
+  display: block;
+  margin-bottom: 4px;
+}
+.char-photo-label-mono {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  color: rgba(240,237,230,0.3);
   text-transform: uppercase;
 }
 
-.footer-dots {
+.char-info-col {
+  background: var(--bg2);
+  padding: 56px 64px 80px;
+  border-left: 1px solid var(--line);
+}
+
+.char-name-block {
+  margin-bottom: 40px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--line);
+}
+.char-file-tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.4em;
+  color: var(--red);
+  text-transform: uppercase;
+  margin-bottom: 16px;
   display: flex;
-  gap: 4px;
+  align-items: center;
+  gap: 12px;
 }
-.footer-dot {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.1);
+.char-file-tag::before {
+  content: '';
+  display: block;
+  width: 20px;
+  height: 1px;
+  background: var(--red);
 }
-.footer-dot.active { background: rgba(192,57,43,0.6); }
+.char-name-jp {
+  font-family: 'Shippori Mincho', serif;
+  font-size: clamp(36px, 4vw, 52px);
+  font-weight: 800;
+  color: var(--white);
+  letter-spacing: 0.1em;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.char-name-kr {
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.55em;
+  color: var(--dim);
+}
 
-/* ─── ANIMATIONS ─── */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
+.char-stat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid var(--line);
+  margin-bottom: 32px;
+}
+.char-stat-cell {
+  padding: 18px 24px;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  transition: background 0.2s ease;
+}
+.char-stat-cell:hover { background: var(--bg3); }
+.char-stat-cell:nth-child(2n) { border-right: none; }
+.char-stat-cell:nth-last-child(-n+2) { border-bottom: none; }
+.char-stat-cell.full-width {
+  grid-column: span 2;
+  border-right: none;
+}
+.char-stat-cell.full-width:last-child { border-bottom: none; }
+
+.csk {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  color: var(--dim);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.csv {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--off);
+  line-height: 1.75;
+}
+.csv strong { color: var(--white); font-weight: 700; }
+
+.chip-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.chip {
+  padding: 3px 10px;
+  border: 1px solid var(--line);
+  background: var(--bg3);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--dim);
 }
 
-.tab-content.active {
-  animation: fadeIn 0.35s ease forwards;
+.char-fear {
+  background: var(--bg3);
+  border-left: 3px solid var(--red);
+  padding: 22px 28px;
+  margin-bottom: 16px;
+}
+.char-fear-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.35em;
+  color: var(--red);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.char-fear p {
+  font-size: 14.5px;
+  font-weight: 600;
+  line-height: 1.9;
+  color: var(--off);
+}
+.char-fear p strong { color: var(--white); }
+
+.char-secret {
+  border: 1px dashed rgba(192,57,43,0.3);
+  background: rgba(192,57,43,0.04);
+  padding: 20px 28px;
+  margin-bottom: 32px;
+}
+.char-secret-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.35em;
+  color: rgba(192,57,43,0.55);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.char-secret p {
+  font-size: 14.5px;
+  font-weight: 600;
+  line-height: 1.9;
+  color: #b87060;
 }
 
-/* ─── MOBILE ─── */
-@media (max-width: 700px) {
-  body { padding: 20px 12px 60px; }
-  .header-inner { padding: 20px 24px 16px; flex-direction: column; align-items: flex-start; }
-  .tab-bar { padding: 0 24px; }
-  .tab-btn { padding: 8px 16px 10px; font-size: 11px; }
-  .doc-section { padding: 32px 24px; }
-  .kenji-split { grid-template-columns: 1fr; }
-  .kenji-photo-col { height: 320px; }
-  .kenji-info-col { padding: 28px 24px; }
-  .org-fact-grid { grid-template-columns: 1fr; }
-  .person-card { grid-template-columns: 1fr; }
-  .dossier-footer { padding: 12px 24px; }
+.play-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 40px;
+  background: var(--red);
+  color: var(--white);
+  font-family: 'Noto Serif KR', serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+.play-link::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.08);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+.play-link:hover::before { transform: translateX(0); }
+.play-link:hover {
+  background: #d44030;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(192,57,43,0.4);
+}
+
+/* ══ FOOTER ════════════════════════════════════ */
+footer {
+  border-top: 1px solid var(--line);
+  padding: 20px 72px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg2);
+}
+.footer-l, .footer-r {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  color: var(--dim);
+  text-transform: uppercase;
+}
+.footer-mid { display: flex; gap: 6px; align-items: center; }
+.fdot { width: 5px; height: 5px; border-radius: 50%; background: var(--line); }
+.fdot.on { background: var(--red); opacity: 0.6; }
+
+/* ══ RESPONSIVE ════════════════════════════════ */
+@media (max-width: 960px) {
+  .masthead-photo { width: 200px; }
+  .masthead-title-block { padding: 36px 32px 28px; }
+  .masthead-title-block::before { display: none; }
+  .tab-nav, .panel-inner, footer { padding-left: 24px; padding-right: 24px; }
+  .char-layout { grid-template-columns: 1fr; margin: 0 -24px; }
+  .char-photo-col { min-height: 380px; }
+  .char-info-col { padding: 36px 28px 56px; }
+  .char-stat-grid { grid-template-columns: 1fr; }
+  .char-stat-cell.full-width { grid-column: span 1; }
+  .char-stat-cell:nth-child(2n) { border-right: none; }
+  .org-stats { grid-template-columns: 1fr 1fr; }
+  .person-block { grid-template-columns: 1fr; gap: 28px; }
+  .sec-head { grid-template-columns: 1fr; gap: 16px; }
+}
+
+@media (max-width: 640px) {
+  .masthead-top { flex-direction: column; }
+  .masthead-photo { width: 100%; height: 280px; }
+  .masthead-accent { width: 100%; height: 6px; }
+  .tab-nav { padding: 0 16px; }
+  .tab-nav-btn { margin-right: 24px; font-size: 13px; }
+  footer { flex-direction: column; gap: 12px; text-align: center; }
+  .pull-quote { padding: 28px 24px; }
+  .org-body, .org-header { padding: 20px 24px; }
+  .org-stat { padding: 16px 20px; }
 }
 </style>
 </head>
 <body>
 
-<div class="dossier">
-
-  <!-- ─── HEADER ─── -->
-  <div class="dossier-header">
-    <div class="header-stripe"></div>
-    <div class="header-inner">
-      <div class="header-title-block">
-        <div class="header-kana">가부키초 · 류자키 켄지 · 조직 파일</div>
-        <h1 class="header-title">流崎 健二</h1>
-        <div class="header-subtitle">Case File No. KRZ-1991-0035 · Kabukicho Division</div>
-      </div>
-      <div class="header-stamp-area">
-        <div class="stamp stamp-red">極秘</div>
-        <div class="stamp stamp-blue">CONFIDENTIAL</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ─── TABS ─── -->
-  <div class="tab-bar">
-    <button class="tab-btn active" data-tab="world">
-      <span class="tab-jp">せかいかん</span>
-      세계관
-    </button>
-    <button class="tab-btn" data-tab="character">
-      <span class="tab-jp">キャラクター</span>
-      캐릭터
-    </button>
-  </div>
-
-  <!-- ═══════════════════════════════════════ -->
-  <!-- TAB: 세계관                              -->
-  <!-- ═══════════════════════════════════════ -->
-  <div id="tab-world" class="tab-content active content-wrap">
-
-    <!-- 소개글 -->
-    <div class="doc-section">
-      <div class="doc-section-id">SECTION 01 · 세계관 개요</div>
-      <h2 class="doc-section-title">時代の終焉</h2>
-      <p class="doc-section-title-kr">시대의 종언</p>
-      <div class="doc-divider"></div>
-
-      <p class="intro-text">
-        <span class="year-callout">1991</span>
-        <strong>폭력단 대책법</strong>. 그 법률이 일본 열도의 뒷골목에 첫 번째 못을 박았다. 
-        야쿠자라는 이름은 하룻밤 사이에 공포의 대명사에서 사회의 기피 대상으로 전락했다. 
-        은행 계좌가 동결되고, 부동산 계약이 거부당했다. 조직원이라는 사실만으로 
-        아파트를 빌릴 수 없고, 자녀를 유치원에 보낼 수 없는 세상이 열렸다.
-      </p>
-      <br>
-      <p class="intro-text">
-        그래도 버티는 자들이 있었다. 넥타이를 매고, 명함을 돌리고, 정치인과 골프를 치며 웃었다. 
-        합법의 탈을 쓴 채 숨을 이었다.
-      </p>
-      <br>
-      <p class="intro-text">
-        <span class="year-callout">2011</span>
-        <strong>폭력단 배제조례</strong>가 전국 47개 도도부현에서 시행되었다. 두 번째 못이 아니라, 
-        관 뚜껑이었다. 야쿠자에게 이익을 제공하는 일반 시민까지 처벌 대상이 되면서, 
-        오야붕의 장례식에 화환을 보내는 것조차 범죄가 되는 나라.
-        머리를 쓰는 놈들은 여전히 잘 먹고 잘 살았다. 
-        그렇지 못한 자들은 아스팔트 위의 낙엽처럼 쓸려나갔다.
-      </p>
-      <br>
-      <p class="intro-text">
-        <strong>가부키초.</strong> 한때 야쿠자의 심장이라 불리던 거리. 지금은 호스트클럽의 현란한 LED와 
-        관광객들의 셀카 플래시가 점령한 테마파크. 
-        그 화려한 거리의 동맥에서 한 블록만 벗어나면, 네온의 빛이 닿지 않는 변두리가 시작된다.
-      </p>
-    </div>
-
-    <!-- 쿠로다구미 -->
-    <div class="doc-section">
-      <div class="doc-section-id">SECTION 02 · 조직 파일</div>
-      <h2 class="doc-section-title">黒田組</h2>
-      <p class="doc-section-title-kr">쿠로다구미</p>
-      <div class="doc-divider"></div>
-
-      <div class="org-card">
-        <div class="org-title">黒田組 → クロスフィールド・ホールディングス</div>
-        <div class="org-subtitle">EST. 1967 · DISBANDED 2011 · REBORN AS CROSSFIELD HOLDINGS</div>
-
-        <div class="org-fact-grid">
-          <div class="org-fact">
-            <div class="org-fact-key">설립</div>
-            <div class="org-fact-val">1967년</div>
-          </div>
-          <div class="org-fact">
-            <div class="org-fact-key">전성기 조직원</div>
-            <div class="org-fact-val">약 300명</div>
-          </div>
-          <div class="org-fact">
-            <div class="org-fact-key">계열 기업</div>
-            <div class="org-fact-val">12개사</div>
-          </div>
-          <div class="org-fact">
-            <div class="org-fact-key">현 법인명</div>
-            <div class="org-fact-val">크로스필드 홀딩스</div>
-          </div>
+<!-- ══ MASTHEAD ════════════════════════════════ -->
+<header class="masthead">
+  <div class="masthead-top">
+    <div class="masthead-accent"></div>
+    <div class="masthead-title-block">
+      <div class="masthead-eyebrow">캐릭터 소개 · 가부키초</div>
+      <h1 class="masthead-name-jp">流崎 健二</h1>
+      <p class="masthead-name-kr">류자키 켄지</p>
+      <div class="masthead-meta-row">
+        <div class="masthead-meta-item">
+          <div class="meta-k">나이</div>
+          <div class="meta-v">35세</div>
         </div>
+        <div class="masthead-meta-item">
+          <div class="meta-k">前 직책</div>
+          <div class="meta-v">쿠로다구미 부두목</div>
+        </div>
+        <div class="masthead-meta-item">
+          <div class="meta-k">현황</div>
+          <div class="meta-v">무직 · 가부키초</div>
+        </div>
+        <div class="masthead-meta-item">
+          <div class="meta-k">신장</div>
+          <div class="meta-v">188cm</div>
+        </div>
+      </div>
+    </div>
+    <div class="masthead-photo">
+      <img
+        src="https://i.postimg.cc/mrpst3zz/artist-qianben-shan-artist-2pineapplepizza-artist-satsuya-1-15-artist-xiaoji-s-1455995722-upscal.png"
+        alt="류자키 켄지"
+      >
+    </div>
+  </div>
+</header>
 
-        <p class="org-body">
-          가부키초 일대의 유흥업소 관리, 채권 추심, 도박장 운영을 주력으로 삼았던 중견 야쿠자 조직. 
-          1991년 폭력단 대책법 시행 이후 수장 쿠로다 마사요시의 주도 하에 단계적 합법화 노선을 채택. 
-          유흥업소 관리는 합법적 경비업체로, 채권 추심은 법무법인 산하 컨설팅으로, 
+<!-- ══ TAB NAV ═════════════════════════════════ -->
+<nav class="tab-nav">
+  <button class="tab-nav-btn active" data-tab="world">
+    <span class="tab-nav-jp">せかいかん</span>
+    세계관
+  </button>
+  <button class="tab-nav-btn" data-tab="character">
+    <span class="tab-nav-jp">キャラクター</span>
+    캐릭터
+  </button>
+</nav>
+
+<!-- ══ TAB: 세계관 ══════════════════════════════ -->
+<div id="tab-world" class="tab-panel active">
+  <div class="panel-inner">
+
+    <!-- SEC 01 -->
+    <div class="sec-head">
+      <div class="sec-num">SEC.01 <span class="sec-num-sub">世界観</span></div>
+      <div>
+        <h2 class="sec-title-jp">時代の終焉</h2>
+        <p class="sec-title-kr">시대의 종언</p>
+      </div>
+    </div>
+
+    <p class="body-text">
+      <span class="year-tag">1991</span>
+      <strong>폭력단 대책법.</strong> 그 법률이 일본 열도의 뒷골목에 첫 번째 못을 박았다.
+      야쿠자라는 이름은 하룻밤 사이에 공포의 대명사에서 사회의 기피 대상으로 전락했다.
+      은행 계좌가 동결되고, 부동산 계약이 거부당했다. 조직원이라는 사실만으로
+      아파트를 빌릴 수 없고, 자녀를 유치원에 보낼 수 없는 세상이 열렸다.
+    </p>
+    <p class="body-text">
+      그래도 버티는 자들이 있었다. 이를 악물고, 합법의 탈을 쓰고,
+      부동산 중개업과 금융 컨설팅이라는 간판 뒤에서 숨을 이었다.
+      머리가 좋은 놈들은 살아남았다. 넥타이를 매고, 명함을 돌리고, 정치인과 골프를 치며 웃었다.
+    </p>
+
+    <div class="pull-quote">
+      <p>잉어는 용이 되지 못했다. 법률이라는 이름의 콘크리트 댐 아래<br>고인 웅덩이에서 천천히 부패하고 있을 뿐이었다.</p>
+      <div class="pull-quote-attr">세계관 소개글 中 · 가부키초</div>
+    </div>
+
+    <p class="body-text">
+      <span class="year-tag">2011</span>
+      <strong>폭력단 배제조례</strong>가 전국 47개 도도부현에서 시행되었다. 두 번째 못이 아니라, 관 뚜껑이었다.
+      야쿠자에게 이익을 제공하는 일반 시민까지 처벌 대상이 되면서,
+      오야붕의 장례식에 화환을 보내는 것조차 범죄가 되는 나라.
+      머리를 쓰는 놈들은 가상화폐의 그림자 속에서 여전히 살아남았다.
+      주먹밖에 모르는 자들은 아스팔트 위의 낙엽처럼 쓸려나갔다.
+    </p>
+    <p class="body-text">
+      <strong>가부키초.</strong> 한때 야쿠자의 심장이라 불리던 거리. 지금은 호스트클럽의 현란한 LED와
+      관광객들의 셀카 플래시가 점령한 테마파크. 그 화려한 거리에서 한 블록만 벗어나면,
+      네온의 빛이 닿지 않는 변두리가 시작된다.
+    </p>
+
+    <div class="red-rule"></div>
+
+    <!-- SEC 02 -->
+    <div class="sec-head">
+      <div class="sec-num">SEC.02 <span class="sec-num-sub">組織ファイル</span></div>
+      <div>
+        <h2 class="sec-title-jp">黒田組</h2>
+        <p class="sec-title-kr">쿠로다구미</p>
+      </div>
+    </div>
+
+    <div class="org-block section-gap">
+      <div class="org-header">
+        <div class="org-name-jp">黒田組 → クロスフィールド・ホールディングス</div>
+        <div class="org-name-en">EST. 1967 · Disbanded 2011 · Reborn as Crossfield Holdings</div>
+      </div>
+      <div class="org-stats">
+        <div class="org-stat">
+          <div class="org-stat-k">설립</div>
+          <div class="org-stat-v">1967년</div>
+        </div>
+        <div class="org-stat">
+          <div class="org-stat-k">전성기 조직원</div>
+          <div class="org-stat-v">약 300명</div>
+        </div>
+        <div class="org-stat">
+          <div class="org-stat-k">계열 기업</div>
+          <div class="org-stat-v">12개사</div>
+        </div>
+        <div class="org-stat">
+          <div class="org-stat-k">현 법인명</div>
+          <div class="org-stat-v">크로스필드 홀딩스</div>
+        </div>
+      </div>
+      <div class="org-body">
+        <p>
+          가부키초 일대의 유흥업소 관리, 채권 추심, 도박장 운영을 주력으로 삼았던 중견 야쿠자 조직.
+          1991년 이후 수장 쿠로다 마사요시의 주도 하에 단계적 합법화 노선을 채택.
+          유흥업소 관리는 합법적 경비업체로, 채권 추심은 법무법인 산하 컨설팅으로,
           부동산 강제 토지매수는 재개발 투자 사업으로 외피를 바꿔갔다.
         </p>
-        <br>
-        <p class="org-body">
-          2011년을 기점으로 조직명은 공식 소멸. 현재는 <strong>주식회사 크로스필드 홀딩스</strong>라는 이름 아래 
-          IT 컨설팅, 부동산 투자, 인력파견업을 영위하는 '깨끗한' 기업으로 탈바꿈. 
-          이면에서는 가상화폐 세탁, 해외 페이퍼 컴퍼니를 통한 자금 우회, 정치 로비 등 
-          구시대 야쿠자의 수법을 세련된 양복으로 감싸 그대로 이어가고 있다.
-          달라진 것은 주먹 대신 계약서를, 칼 대신 변호사를 쓴다는 것뿐이다.
+        <p>
+          2011년을 기점으로 조직명은 공식 소멸. 현재는 <strong>주식회사 크로스필드 홀딩스</strong>라는 이름 아래
+          IT 컨설팅, 부동산 투자, 인력파견업을 영위하는 '깨끗한' 기업으로 탈바꿈.
+          이면에서는 가상화폐 세탁, 해외 페이퍼 컴퍼니를 통한 자금 우회, 정치 로비 등
+          구시대의 수법을 세련된 양복으로 감싸 그대로 이어가고 있다.
         </p>
-        <br>
-        <span class="status-badge badge-red">해체 → 위장 존속</span>
-        <span class="status-badge badge-ink">가상화폐 세탁</span>
-        <span class="status-badge badge-ink">정치 로비</span>
-      </div>
-    </div>
-
-    <!-- 쿠로다 마사요시 -->
-    <div class="doc-section">
-      <div class="doc-section-id">SECTION 03 · 인물 파일</div>
-      <h2 class="doc-section-title">黒田 正義</h2>
-      <p class="doc-section-title-kr">쿠로다 마사요시</p>
-      <div class="doc-divider"></div>
-
-      <div class="person-card">
-        <div class="person-id-block">
-          <div class="person-photo-placeholder">
-            <img src="https://i.postimg.cc/gj0VDZYP/1-6-artist-mgong520-1-6-artist-qianben-shan-1-4-artist-kiyoi-95328295-s-3234999121-upscal.png" alt="쿠로다 마사요시">
-          </div>
-          <div class="person-id-num">ID #KRD-0001</div>
-        </div>
-        <div>
-          <div class="person-name">黒田 正義</div>
-          <div class="person-name-kr">쿠로다 마사요시 · 58세</div>
-
-          <div class="person-meta">
-            <div class="meta-item">
-              <div class="meta-key">前직</div>
-              <div class="meta-val">쿠로다구미 수장</div>
-            </div>
-            <div class="meta-item">
-              <div class="meta-key">現직</div>
-              <div class="meta-val">크로스필드 홀딩스 대표이사</div>
-            </div>
-          </div>
-
-          <p class="person-body">
-            은발을 올백으로 넘긴 단정한 인상. 야쿠자보다 대기업 임원에 가까운 분위기. 
-            냉철하고 계산적이며, 의리라는 단어를 입에 올리지만 실익 앞에서는 30년 충성도 
-            종이 한 장처럼 찢어버리는 사내.<br><br>
-            고아원 시절의 켄지를 직접 거둬 조직에 들인 은인이자 아버지 같은 존재였으나, 
-            합법화 과정에서 켄지를 '폭력의 잔재'로 규정하고 일방적으로 파문. 
-            퇴직금 대신 빚보증서를 떠안기고 거리로 쫓아냈다. 
-            현재 비자금 장부의 행방이 묘연해지자 간헐적으로 접촉을 시도 중.
-          </p>
-          <br>
-          <span class="status-badge badge-red">파문 집행자</span>
-          <span class="status-badge badge-ink">배신</span>
+        <div class="badge-row">
+          <span class="badge badge-r">해체 → 위장 존속</span>
+          <span class="badge badge-g">가상화폐 세탁</span>
+          <span class="badge badge-g">정치 로비</span>
+          <span class="badge badge-g">페이퍼 컴퍼니</span>
         </div>
       </div>
     </div>
 
-  </div><!-- /tab-world -->
+    <!-- SEC 03 -->
+    <div class="sec-head">
+      <div class="sec-num">SEC.03 <span class="sec-num-sub">人物ファイル</span></div>
+      <div>
+        <h2 class="sec-title-jp">黒田 正義</h2>
+        <p class="sec-title-kr">쿠로다 마사요시</p>
+      </div>
+    </div>
 
-  <!-- ═══════════════════════════════════════ -->
-  <!-- TAB: 캐릭터                             -->
-  <!-- ═══════════════════════════════════════ -->
-  <div id="tab-character" class="tab-content content-wrap">
-
-    <div class="kenji-split">
-
-      <!-- Photo column -->
-      <div class="kenji-photo-col">
-        <img 
-          src="https://i.postimg.cc/mrpst3zz/artist-qianben-shan-artist-2pineapplepizza-artist-satsuya-1-15-artist-xiaoji-s-1455995722-upscal.png"
-          alt="류자키 켄지"
+    <div class="person-block">
+      <div class="person-photo-wrap">
+        <img
+          src="https://i.postimg.cc/gj0VDZYP/1-6-artist-mgong520-1-6-artist-qianben-shan-1-4-artist-kiyoi-95328295-s-3234999121-upscal.png"
+          alt="쿠로다 마사요시"
         >
-        <div class="photo-label">류자키 켄지 · 流崎 健二</div>
+        <div class="person-photo-id">ID · KRD-0001</div>
       </div>
-
-      <!-- Info column -->
-      <div class="kenji-info-col ruled-section">
-
-        <div class="kenji-name-block">
-          <div class="kenji-file-id">SUBJECT FILE · KRZ-1991-0035 · 류자키 켄지</div>
-          <h2 class="kenji-name-jp">流崎 健二</h2>
-          <p class="kenji-name-kr">류자키 켄지</p>
+      <div>
+        <div class="person-name-jp">黒田 正義</div>
+        <div class="person-name-kr">쿠로다 마사요시</div>
+        <div class="person-meta-row">
+          <div class="person-meta-item">
+            <div class="pmk">나이</div>
+            <div class="pmv">58세</div>
+          </div>
+          <div class="person-meta-item">
+            <div class="pmk">前직</div>
+            <div class="pmv">쿠로다구미 수장</div>
+          </div>
+          <div class="person-meta-item">
+            <div class="pmk">現직</div>
+            <div class="pmv">크로스필드 홀딩스 대표이사</div>
+          </div>
         </div>
-
-        <table class="kenji-stats">
-          <tr>
-            <td>나이</td>
-            <td><strong>35세</strong></td>
-          </tr>
-          <tr>
-            <td>외형</td>
-            <td><strong>188cm</strong>. 윤기 잃은 흑발, 긴 앞머리. 탁한 흑색 삼백안, 짙은 다크서클. 수척한 근육질, 칼자국. 등 전체를 덮은 <strong>잉어 이레즈미</strong>. 짙은 담배 냄새.</td>
-          </tr>
-          <tr>
-            <td>前직</td>
-            <td><strong>쿠로다구미 부두목</strong> — 무력 집행 및 채권 회수 총괄</td>
-          </tr>
-          <tr>
-            <td>現직</td>
-            <td>무직. 간헐적 도박장 문지기로 연명. 정기 수입 <strong>전무</strong>.</td>
-          </tr>
-          <tr>
-            <td>거주지</td>
-            <td>가부키초 변두리 셋방. 낡은 소파, 빈 술병, 담배꽁초.</td>
-          </tr>
-          <tr>
-            <td>말투</td>
-            <td>낮고 느릿한 반말. 바닥을 긁는 쉰 바리톤.</td>
-          </tr>
-          <tr>
-            <td>성격</td>
-            <td>
-              세상 만사 무관심, 체념한 우울 — 내면엔 억눌린 증오와 폭력성.
-              <div class="ptag-list">
-                <span class="ptag">우울증</span>
-                <span class="ptag">알코올 의존</span>
-                <span class="ptag">불면증</span>
-                <span class="ptag">자기혐오</span>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>습관</td>
-            <td>마른세수로 얼굴을 쓸어내리며 한숨. 불안 시 손톱을 물어뜯음.</td>
-          </tr>
-          <tr>
-            <td>좋아함</td>
-            <td>값싼 위스키, 독한 담배, 깊은 수면.</td>
-          </tr>
-          <tr>
-            <td>싫어함</td>
-            <td>밝은 햇빛, 소음, 희망찬 미래 이야기.</td>
-          </tr>
-        </table>
-
-        <div class="kenji-fear">
-          <p>
-            유일한 구원이자 집착의 대상인 당신마저 자신을 버리고 떠나, 영원한 고독 속에 남겨지는 것.
-          </p>
+        <p class="person-desc">
+          은발을 올백으로 넘긴 단정한 인상. 야쿠자보다 대기업 임원에 가까운 분위기.
+          냉철하고 계산적이며, 의리라는 단어를 입에 올리지만 실익 앞에서는 30년 충성도
+          종이 한 장처럼 찢어버리는 사내.
+        </p>
+        <p class="person-desc">
+          고아원 시절의 켄지를 직접 거둬 조직에 들인 은인이자 아버지 같은 존재였으나,
+          합법화 과정에서 켄지를 '폭력의 잔재'로 규정하고 일방적으로 파문.
+          퇴직금 대신 빚보증서를 떠안기고 거리로 쫓아냈다.
+          현재 비자금 장부의 행방이 묘연해지자 간헐적으로 접촉을 시도 중.
+        </p>
+        <div class="badge-row" style="margin-top:20px;">
+          <span class="badge badge-r">파문 집행자</span>
+          <span class="badge badge-g">배신</span>
         </div>
-
-        <div class="kenji-secret">
-          극심한 불면증에 시달리지만, 당신을 품에 안고 체향을 맡을 때만
-          악몽 없이 깊은 잠에 빠져든다.
-        </div>
-
-        <div class="kenji-cta">
-          <a href="https://rofan.ai/character/5b619eee-dac8-4a21-9c43-626be73946c7" class="play-btn" target="_blank">
-            플레이하기
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </a>
-        </div>
-
       </div>
     </div>
 
-  </div><!-- /tab-character -->
-
-  <!-- ─── FOOTER ─── -->
-  <div class="dossier-footer">
-    <span class="footer-code">極秘 · AI Character · 창작 목적 · 실존 인물 무관</span>
-    <div class="footer-dots">
-      <div class="footer-dot active"></div>
-      <div class="footer-dot"></div>
-      <div class="footer-dot active"></div>
-    </div>
-    <span class="footer-code">KRZ-FILE-1991 © KABUKICHO</span>
   </div>
+</div>
 
-</div><!-- /dossier -->
+<!-- ══ TAB: 캐릭터 ══════════════════════════════ -->
+<div id="tab-character" class="tab-panel">
+  <div class="char-layout">
+
+    <div class="char-photo-col">
+      <img
+        src="https://i.postimg.cc/mrpst3zz/artist-qianben-shan-artist-2pineapplepizza-artist-satsuya-1-15-artist-xiaoji-s-1455995722-upscal.png"
+        alt="류자키 켄지"
+      >
+      <div class="char-photo-label">
+        <span class="char-photo-label-jp">流崎 健二</span>
+        <span class="char-photo-label-mono">Former Lieutenant · Kabukicho</span>
+      </div>
+    </div>
+
+    <div class="char-info-col">
+      <div class="char-name-block">
+        <div class="char-file-tag">Character File · KRZ-1991-0035</div>
+        <h2 class="char-name-jp">流崎 健二</h2>
+        <p class="char-name-kr">류자키 켄지</p>
+      </div>
+
+      <div class="char-stat-grid">
+        <div class="char-stat-cell">
+          <div class="csk">나이 · 신장</div>
+          <div class="csv"><strong>35세</strong> · 188cm</div>
+        </div>
+        <div class="char-stat-cell">
+          <div class="csk">前 직책</div>
+          <div class="csv"><strong>쿠로다구미 부두목</strong></div>
+        </div>
+        <div class="char-stat-cell">
+          <div class="csk">現 상황</div>
+          <div class="csv">무직 · 간헐적 도박장 문지기<br>정기 수입 <strong>전무</strong></div>
+        </div>
+        <div class="char-stat-cell">
+          <div class="csk">거주지</div>
+          <div class="csv">가부키초 변두리 셋방<br>낡은 소파, 빈 술병, 담배꽁초</div>
+        </div>
+        <div class="char-stat-cell full-width">
+          <div class="csk">외형</div>
+          <div class="csv">
+            윤기 잃은 흑발 · 눈을 찌르는 긴 앞머리 · 탁한 흑색 삼백안 · 짙은 다크서클.<br>
+            수척해진 근육질 · 곳곳의 칼자국 · 등 전체를 덮은 <strong>잉어 이레즈미</strong>.<br>
+            짙은 담배 냄새와 싸구려 위스키 향.
+          </div>
+        </div>
+        <div class="char-stat-cell">
+          <div class="csk">말투 · 목소리</div>
+          <div class="csv">낮고 느릿한 <strong>반말</strong><br>바닥을 긁는 쉰 바리톤</div>
+        </div>
+        <div class="char-stat-cell">
+          <div class="csk">습관</div>
+          <div class="csv">마른세수 + 깊은 한숨<br>불안 시 손톱을 물어뜯음</div>
+        </div>
+        <div class="char-stat-cell">
+          <div class="csk">좋아하는 것</div>
+          <div class="csv">값싼 위스키 · 독한 담배<br>깊은 수면</div>
+        </div>
+        <div class="char-stat-cell">
+          <div class="csk">싫어하는 것</div>
+          <div class="csv">밝은 햇빛 · 소음<br>희망찬 미래 이야기</div>
+        </div>
+        <div class="char-stat-cell full-width">
+          <div class="csk">성격</div>
+          <div class="csv">세상 만사 무관심, 모든 것을 포기한 듯한 우울 — 내면엔 억눌린 <strong>세상을 향한 증오</strong>와 폭력성.</div>
+          <div class="chip-row">
+            <span class="chip">우울증</span>
+            <span class="chip">알코올 의존</span>
+            <span class="chip">불면증</span>
+            <span class="chip">자기혐오</span>
+            <span class="chip">체념</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="char-fear">
+        <div class="char-fear-label">두려움 · Fear</div>
+        <p>유일한 구원이자 집착의 대상인 <strong>당신</strong>마저 자신을 버리고 떠나, 영원한 고독 속에 남겨지는 것.</p>
+      </div>
+
+      <div class="char-secret">
+        <div class="char-secret-label">비고 · Note</div>
+        <p>극심한 불면증에 시달리지만, 당신을 품에 안고 체향을 맡을 때만 악몽 없이 깊은 잠에 빠져든다.</p>
+      </div>
+
+      <a href="https://rofan.ai/character/5b619eee-dac8-4a21-9c43-626be73946c7"
+         class="play-link"
+         target="_blank">
+        플레이하기
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ FOOTER ══════════════════════════════════ -->
+<footer>
+  <span class="footer-l">極秘 · 창작 목적 · 실존 인물 무관</span>
+  <div class="footer-mid">
+    <div class="fdot on"></div>
+    <div class="fdot"></div>
+    <div class="fdot on"></div>
+  </div>
+  <span class="footer-r">KRZ-FILE-1991 · Kabukicho Division</span>
+</footer>
 
 <script>
-  const tabs = document.querySelectorAll('.tab-btn');
-  const contents = document.querySelectorAll('.tab-content');
-
-  tabs.forEach(btn => {
+  document.querySelectorAll('.tab-nav-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      const target = btn.dataset.tab;
-
-      tabs.forEach(t => t.classList.remove('active'));
-      contents.forEach(c => c.classList.remove('active'));
-
+      document.querySelectorAll('.tab-nav-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
       btn.classList.add('active');
-      document.getElementById('tab-' + target).classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
     });
   });
 </script>
