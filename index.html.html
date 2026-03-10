@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>류자키 켄지 — 캐릭터 소개</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;700;900&family=Noto+Serif+JP:wght@300;400;700&family=Bebas+Neue&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0905;
+    --dark: #111009;
+    --surface: #1a1710;
+    --amber: #c8922a;
+    --amber-dim: #7a5519;
+    --ash: #a09585;
+    --smoke: #4a4035;
+    --red: #8b1a1a;
+    --red-bright: #c0392b;
+    --cream: #e8dfc8;
+    --text: #cdbfa8;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'Noto Serif KR', 'Noto Serif JP', serif;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* Grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.35;
+  }
+
+  /* ─── HERO ─────────────────────────────────────────── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 80% at 30% 50%, rgba(30,22,10,0.95) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 75% 30%, rgba(139,26,26,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 60% 80%, rgba(200,146,42,0.06) 0%, transparent 50%),
+      linear-gradient(160deg, #0a0905 0%, #15120a 50%, #0d0b07 100%);
+  }
+
+  /* Vertical lines decoration */
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 79px,
+      rgba(200,146,42,0.04) 79px,
+      rgba(200,146,42,0.04) 80px
+    );
+  }
+
+  .hero-left {
+    position: relative;
+    z-index: 2;
+    padding: 80px 60px 80px 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .jp-label {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--amber-dim);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .jp-label::before {
+    content: '';
+    display: inline-block;
+    width: 32px;
+    height: 1px;
+    background: var(--amber-dim);
+  }
+
+  .hero-name-jp {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 700;
+    color: var(--cream);
+    letter-spacing: 0.2em;
+    line-height: 1;
+    margin-bottom: 8px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.3s forwards;
+  }
+
+  .hero-name-kr {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(14px, 2vw, 18px);
+    font-weight: 300;
+    color: var(--ash);
+    letter-spacing: 0.5em;
+    margin-bottom: 40px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.5s forwards;
+  }
+
+  .divider {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, var(--amber), transparent);
+    margin-bottom: 40px;
+    opacity: 0;
+    animation: expandLine 1s ease 0.7s forwards;
+  }
+
+  .hero-copy {
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 2.2;
+    color: var(--ash);
+    max-width: 380px;
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.9s forwards;
+  }
+
+  .hero-copy em {
+    color: var(--amber);
+    font-style: normal;
+  }
+
+  .stat-row {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 56px;
+    opacity: 0;
+    animation: fadeUp 1s ease 1.1s forwards;
+  }
+
+  .stat-item {
+    border-left: 2px solid var(--amber-dim);
+    padding-left: 16px;
+  }
+
+  .stat-label {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--smoke);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .stat-value {
+    font-size: 14px;
+    color: var(--cream);
+    font-weight: 400;
+  }
+
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 28px;
+    background: transparent;
+    border: 1px solid var(--amber-dim);
+    color: var(--amber);
+    font-family: 'Noto Serif KR', serif;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    animation: fadeUp 1s ease 1.3s forwards;
+  }
+
+  .cta-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--amber);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: -1;
+  }
+
+  .cta-btn:hover {
+    color: var(--black);
+    border-color: var(--amber);
+  }
+  .cta-btn:hover::before { transform: translateX(0); }
+
+  .cta-btn svg {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.3s ease;
+  }
+  .cta-btn:hover svg { transform: translateX(4px); }
+
+  /* ─── HERO RIGHT ────────────────────────────────────── */
+  .hero-right {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 60px;
+  }
+
+  .character-frame {
+    position: relative;
+    width: 320px;
+    height: 480px;
+    opacity: 0;
+    animation: fadeIn 1.5s ease 0.5s forwards;
+  }
+
+  /* Decorative frame corners */
+  .character-frame::before, .character-frame::after {
+    content: '';
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    z-index: 3;
+  }
+  .character-frame::before {
+    top: -2px; left: -2px;
+    border-top: 2px solid var(--amber);
+    border-left: 2px solid var(--amber);
+  }
+  .character-frame::after {
+    bottom: -2px; right: -2px;
+    border-bottom: 2px solid var(--amber);
+    border-right: 2px solid var(--amber);
+  }
+
+  .frame-corner-tr, .frame-corner-bl {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    z-index: 3;
+  }
+  .frame-corner-tr { top: -2px; right: -2px; border-top: 2px solid var(--amber); border-right: 2px solid var(--amber); }
+  .frame-corner-bl { bottom: -2px; left: -2px; border-bottom: 2px solid var(--amber); border-left: 2px solid var(--amber); }
+
+  .character-silhouette {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .character-silhouette img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+    filter: saturate(0.85) brightness(0.9);
+    transition: filter 0.5s ease, transform 0.5s ease;
+  }
+
+  .character-frame:hover .character-silhouette img {
+    filter: saturate(1) brightness(1);
+    transform: scale(1.03);
+  }
+
+  /* Gradient fade at bottom */
+  .character-silhouette::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 120px;
+    background: linear-gradient(180deg, transparent, var(--black));
+    z-index: 2;
+  }
+
+  /* Info overlay at bottom */
+  .char-img-label {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    right: 16px;
+    z-index: 4;
+    text-align: center;
+  }
+
+  /* Kanji watermark */
+  .kanji-bg {
+    position: absolute;
+    right: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Noto Serif JP', serif;
+    font-size: 120px;
+    font-weight: 900;
+    color: rgba(200,146,42,0.04);
+    writing-mode: vertical-rl;
+    line-height: 1;
+    user-select: none;
+    letter-spacing: -0.1em;
+  }
+
+  /* ─── WORLD SECTION ─────────────────────────────────── */
+  .section {
+    padding: 100px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.5em;
+    color: var(--amber-dim);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    max-width: 60px;
+    height: 1px;
+    background: var(--amber-dim);
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 700;
+    color: var(--cream);
+    line-height: 1.2;
+    margin-bottom: 48px;
+  }
+  .section-title span {
+    color: var(--amber);
+    font-style: italic;
+  }
+
+  /* World cards */
+  .world-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2px;
+  }
+
+  .world-card {
+    background: var(--surface);
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s ease;
+  }
+  .world-card:hover { background: #1f1d14; }
+
+  .world-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 0;
+    background: var(--amber);
+    transition: height 0.4s ease;
+  }
+  .world-card:hover::before { height: 100%; }
+
+  .world-card-year {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 56px;
+    color: rgba(200,146,42,0.12);
+    line-height: 1;
+    margin-bottom: 12px;
+    transition: color 0.3s ease;
+  }
+  .world-card:hover .world-card-year { color: rgba(200,146,42,0.25); }
+
+  .world-card-title {
+    font-size: 13px;
+    color: var(--amber);
+    letter-spacing: 0.15em;
+    margin-bottom: 16px;
+  }
+
+  .world-card-text {
+    font-size: 12.5px;
+    line-height: 2;
+    color: var(--ash);
+    font-weight: 300;
+  }
+
+  .world-card.accent {
+    background: rgba(139,26,26,0.12);
+    grid-column: span 1;
+  }
+  .world-card.accent::before { background: var(--red-bright); }
+
+  /* ─── PROFILE SECTION ───────────────────────────────── */
+  .profile-section {
+    padding: 100px 80px;
+    background: linear-gradient(180deg, var(--black) 0%, var(--dark) 100%);
+    position: relative;
+  }
+
+  .profile-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1px;
+    background: rgba(200,146,42,0.08);
+    border: 1px solid rgba(200,146,42,0.08);
+  }
+
+  .profile-cell {
+    background: var(--dark);
+    padding: 32px;
+    transition: background 0.3s ease;
+  }
+  .profile-cell:hover { background: var(--surface); }
+
+  .profile-cell-icon {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 28px;
+    color: rgba(200,146,42,0.3);
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .profile-cell-title {
+    font-size: 9px;
+    letter-spacing: 0.4em;
+    color: var(--amber-dim);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .profile-cell-content {
+    font-size: 13px;
+    line-height: 2;
+    color: var(--ash);
+    font-weight: 300;
+  }
+
+  .profile-cell-content strong {
+    color: var(--cream);
+    font-weight: 400;
+  }
+
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 4px;
+  }
+
+  .tag {
+    padding: 4px 12px;
+    border: 1px solid rgba(200,146,42,0.2);
+    font-size: 11px;
+    color: var(--amber-dim);
+    letter-spacing: 0.05em;
+  }
+
+  /* ─── QUOTE SECTION ─────────────────────────────────── */
+  .quote-section {
+    padding: 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .quote-section::before {
+    content: '鯉';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Noto Serif JP';
+    font-size: 400px;
+    font-weight: 900;
+    color: rgba(200,146,42,0.025);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  blockquote {
+    position: relative;
+    z-index: 2;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(18px, 2.5vw, 26px);
+    font-style: italic;
+    line-height: 1.8;
+    color: var(--cream);
+    max-width: 700px;
+    margin: 0 auto 24px;
+    font-weight: 400;
+  }
+
+  blockquote::before {
+    content: '"';
+    font-size: 120px;
+    color: rgba(200,146,42,0.15);
+    position: absolute;
+    top: -40px;
+    left: -20px;
+    font-style: normal;
+    line-height: 1;
+  }
+
+  .quote-attr {
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--amber-dim);
+    text-transform: uppercase;
+  }
+
+  /* ─── KENJI DETAIL SECTION ──────────────────────────── */
+  .detail-section {
+    padding: 100px 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .detail-text-block { }
+
+  .detail-list {
+    list-style: none;
+    margin-top: 24px;
+  }
+
+  .detail-list li {
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(200,146,42,0.08);
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 16px;
+    font-size: 13px;
+  }
+
+  .detail-list li .key {
+    color: var(--amber-dim);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding-top: 2px;
+  }
+
+  .detail-list li .val {
+    color: var(--ash);
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  .detail-list li .val em {
+    color: var(--cream);
+    font-style: normal;
+  }
+
+  /* Fear box */
+  .fear-box {
+    margin-top: 48px;
+    padding: 32px;
+    border: 1px solid rgba(139,26,26,0.3);
+    background: rgba(139,26,26,0.06);
+    position: relative;
+  }
+
+  .fear-box::before {
+    content: '두려움';
+    position: absolute;
+    top: -8px;
+    left: 20px;
+    background: var(--black);
+    padding: 0 8px;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--red-bright);
+    text-transform: uppercase;
+  }
+
+  .fear-box p {
+    font-size: 13px;
+    line-height: 2;
+    color: var(--ash);
+    font-weight: 300;
+  }
+
+  /* Tattoo art panel */
+  .tattoo-panel {
+    background: var(--surface);
+    padding: 48px;
+    position: relative;
+    overflow: hidden;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .tattoo-art {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .tattoo-kanji-large {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 160px;
+    font-weight: 900;
+    color: rgba(200,146,42,0.15);
+    line-height: 1;
+    display: block;
+    margin-bottom: 8px;
+    transition: color 0.4s ease;
+  }
+
+  .tattoo-panel:hover .tattoo-kanji-large {
+    color: rgba(200,146,42,0.3);
+  }
+
+  .tattoo-kanji-sub {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 60px;
+    font-weight: 300;
+    color: rgba(139,26,26,0.3);
+    display: block;
+    margin-bottom: 32px;
+    transition: color 0.4s ease;
+  }
+  .tattoo-panel:hover .tattoo-kanji-sub { color: rgba(139,26,26,0.55); }
+
+  .tattoo-desc {
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--smoke);
+    text-align: center;
+    line-height: 2;
+  }
+
+  .tattoo-desc span {
+    display: block;
+    color: var(--amber-dim);
+  }
+
+  .tattoo-panel::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 70% at 50% 50%, rgba(200,146,42,0.04) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* Irezumi border decoration */
+  .tattoo-border {
+    position: absolute;
+    inset: 16px;
+    border: 1px solid rgba(200,146,42,0.08);
+    pointer-events: none;
+  }
+
+  /* ─── RELATIONSHIP SECTION ──────────────────────────── */
+  .relation-section {
+    padding: 100px 80px;
+    background: var(--dark);
+  }
+
+  .relation-card {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 40px;
+    padding: 40px;
+    background: var(--surface);
+    align-items: start;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+
+  .relation-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, var(--amber-dim), transparent);
+  }
+  .relation-card:hover { background: #1f1d14; }
+
+  .relation-initial {
+    width: 80px;
+    height: 80px;
+    border: 1px solid var(--amber-dim);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Noto Serif JP', serif;
+    font-size: 28px;
+    color: var(--amber);
+    flex-shrink: 0;
+    position: relative;
+  }
+  .relation-initial::before {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border: 1px solid rgba(200,146,42,0.2);
+  }
+
+  .relation-name {
+    font-size: 16px;
+    color: var(--cream);
+    font-weight: 400;
+    margin-bottom: 4px;
+    letter-spacing: 0.1em;
+  }
+  .relation-name-jp {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 11px;
+    color: var(--amber-dim);
+    letter-spacing: 0.2em;
+    margin-bottom: 16px;
+  }
+  .relation-desc {
+    font-size: 12.5px;
+    line-height: 2;
+    color: var(--ash);
+    font-weight: 300;
+  }
+  .relation-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border: 1px solid rgba(139,26,26,0.4);
+    background: rgba(139,26,26,0.1);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--red-bright);
+    margin-top: 12px;
+    text-transform: uppercase;
+  }
+
+  /* ─── FOOTER / CTA ──────────────────────────────────── */
+  .footer-cta {
+    padding: 120px 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .footer-cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(200,146,42,0.05) 0%, transparent 70%);
+  }
+
+  .footer-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .footer-sub {
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    color: var(--ash);
+    margin-bottom: 48px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .footer-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 48px;
+    background: var(--amber);
+    color: var(--black);
+    font-family: 'Noto Serif KR', serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 2;
+    text-transform: uppercase;
+  }
+
+  .footer-btn:hover {
+    background: var(--cream);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(200,146,42,0.3);
+  }
+
+  .footer-legal {
+    margin-top: 60px;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--smoke);
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ─── ANIMATIONS ────────────────────────────────────── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes expandLine {
+    from { opacity: 0; transform: scaleX(0); transform-origin: left; }
+    to { opacity: 1; transform: scaleX(1); transform-origin: left; }
+  }
+
+  /* Scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-delay-1 { transition-delay: 0.15s; }
+  .reveal-delay-2 { transition-delay: 0.3s; }
+  .reveal-delay-3 { transition-delay: 0.45s; }
+
+  /* Horizontal rule */
+  hr.fancy {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(200,146,42,0.2), transparent);
+    margin: 0 80px;
+  }
+
+  /* ─── MOBILE ────────────────────────────────────────── */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-right { display: none; }
+    .hero-left { padding: 60px 32px; }
+    .section, .profile-section, .relation-section, .footer-cta { padding: 60px 32px; }
+    .detail-section { grid-template-columns: 1fr; gap: 40px; padding: 60px 32px; }
+    .world-grid { grid-template-columns: 1fr; }
+    .profile-grid { grid-template-columns: 1fr; }
+    hr.fancy { margin: 0 32px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── HERO ─────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="kanji-bg">流崎健二</div>
+
+  <div class="hero-left">
+    <div class="jp-label">캐릭터 소개</div>
+    <h1 class="hero-name-jp">流崎 健二</h1>
+    <p class="hero-name-kr">류자키 켄지</p>
+    <div class="divider"></div>
+    <p class="hero-copy">
+      가부키초 변두리.<br>
+      한때 <em>쿠로다구미의 살아있는 흉기</em>라 불렸던 남자.<br>
+      법률이라는 댐에 막혀, 잉어는 용이 되지 못했다.<br>
+      남은 것은 빈 병과, 꺼지지 않는 담배 한 개비.
+    </p>
+    <div class="stat-row">
+      <div class="stat-item">
+        <div class="stat-label">Age</div>
+        <div class="stat-value">35세</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">Former</div>
+        <div class="stat-value">前 부두목</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">Location</div>
+        <div class="stat-value">가부키초</div>
+      </div>
+    </div>
+    <a href="#" class="cta-btn" target="_blank">
+      플레이하기
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+    </a>
+  </div>
+
+  <div class="hero-right">
+    <div class="character-frame">
+      <div class="frame-corner-tr"></div>
+      <div class="frame-corner-bl"></div>
+      <div class="character-silhouette">
+        <img 
+          src="https://i.postimg.cc/mrpst3zz/artist-qianben-shan-artist-2pineapplepizza-artist-satsuya-1-15-artist-xiaoji-s-1455995722-upscal.png" 
+          alt="류자키 켄지"
+        >
+        <div class="char-img-label">
+          <div style="font-size:9px;letter-spacing:0.3em;color:rgba(200,146,42,0.5);text-transform:uppercase;">
+            Irezumi · 鯉 · 流崎 健二
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="fancy">
+
+<!-- ─── WORLD ──────────────────────────────────────── -->
+<section class="section">
+  <div class="section-label reveal">세계관</div>
+  <h2 class="section-title reveal reveal-delay-1">야쿠자의 시대는<br><span>두 번의 법률</span>로 끝났다</h2>
+
+  <div class="world-grid reveal reveal-delay-2">
+    <div class="world-card">
+      <div class="world-card-year">1991</div>
+      <div class="world-card-title">폭력단 대책법 시행</div>
+      <div class="world-card-text">
+        야쿠자라는 이름은 하룻밤 사이에 공포의 대명사에서 사회의 기피 대상으로 전락했다. 
+        은행 계좌가 동결되고, 아파트를 빌릴 수 없고, 자동차 보험에 가입할 수 없는 세상이 열렸다. 
+        머리가 좋은 놈들은 살아남았다. 넥타이를 매고, 명함을 돌리며.
+      </div>
+    </div>
+    <div class="world-card accent">
+      <div class="world-card-year">2011</div>
+      <div class="world-card-title">폭력단 배제조례 전국 시행</div>
+      <div class="world-card-text">
+        관 뚜껑이었다. 야쿠자에게 이익을 제공하는 일반 시민까지 처벌 대상이 되면서, 
+        오야붕의 장례식에 화환을 보내는 것조차 범죄가 되는 나라.
+        주먹밖에 모르는 자들은 아스팔트 위의 낙엽처럼 쓸려나갔다.
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="fancy">
+
+<!-- ─── PROFILE CELLS ─────────────────────────────── -->
+<section class="profile-section">
+  <div class="section-label reveal">프로필</div>
+  <h2 class="section-title reveal reveal-delay-1">버려진 자의<br><span>기록</span></h2>
+
+  <div class="profile-grid">
+    <div class="profile-cell reveal">
+      <span class="profile-cell-icon">外</span>
+      <div class="profile-cell-title">외형</div>
+      <div class="profile-cell-content">
+        <strong>188cm.</strong> 윤기 잃은 흑발, 눈을 찌르는 긴 앞머리. 
+        탁하고 생기 없는 짙은 흑색의 삼백안. 
+        수척해진 근육질, 곳곳에 남은 칼자국. 
+        등 전체를 덮은 <strong>잉어 이레즈미</strong>.
+        짙은 담배 냄새와 싸구려 위스키 향의 혼합.
+      </div>
+    </div>
+    <div class="profile-cell reveal reveal-delay-1">
+      <span class="profile-cell-icon">性</span>
+      <div class="profile-cell-title">성격 & 내면</div>
+      <div class="profile-cell-content">
+        표면은 세상에 무관심하고 모든 것을 포기한 듯한 우울.<br><br>
+        내면 깊은 곳엔 <strong>세상을 향한 증오</strong>와 억눌린 폭력성.
+        <div class="tag-list" style="margin-top:16px;">
+          <span class="tag">우울</span>
+          <span class="tag">체념</span>
+          <span class="tag">알코올 의존</span>
+          <span class="tag">불면증</span>
+        </div>
+      </div>
+    </div>
+    <div class="profile-cell reveal reveal-delay-2">
+      <span class="profile-cell-icon">声</span>
+      <div class="profile-cell-title">말투 & 목소리</div>
+      <div class="profile-cell-content">
+        지독한 우울과 귀찮음이 묻어나는 <strong>낮고 느릿한 반말</strong>.<br><br>
+        낮게 바닥을 긁는 듯한 바리톤. 잦은 음주와 흡연으로 인해 심하게 갈라지고 쉰 목소리.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── QUOTE ──────────────────────────────────────── -->
+<section class="quote-section">
+  <blockquote class="reveal">
+    등에 새겨진 잉어는 폭포를 거슬러 용이 되는 전설을 담고 있었지만, 
+    현실의 폭포는 법률이라는 이름의 콘크리트 댐이었다.
+  </blockquote>
+  <p class="quote-attr reveal reveal-delay-1">世界観 · 세계관 소개글 中</p>
+</section>
+
+<hr class="fancy">
+
+<!-- ─── DETAIL + TATTOO ────────────────────────────── -->
+<section class="detail-section">
+  <div class="detail-text-block">
+    <div class="section-label reveal">세부 정보</div>
+    <h2 class="section-title reveal reveal-delay-1">켄지라는<br><span>인간</span></h2>
+
+    <ul class="detail-list reveal reveal-delay-2">
+      <li>
+        <span class="key">습관</span>
+        <span class="val">마른세수로 얼굴을 쓸어내리며 깊은 한숨. 불안할 때 <em>손톱을 물어뜯는 버릇</em>.</span>
+      </li>
+      <li>
+        <span class="key">좋아하는 것</span>
+        <span class="val"><em>값싼 위스키</em>, 독한 담배, 현실을 도피할 수 있는 깊은 수면.</span>
+      </li>
+      <li>
+        <span class="key">싫어하는 것</span>
+        <span class="val">밝은 햇빛, 시끄러운 소음, 희망찬 미래에 대한 이야기.</span>
+      </li>
+      <li>
+        <span class="key">거주지</span>
+        <span class="val">가부키초 변두리. 낡은 가죽 소파와 빈 술병, 담배꽁초가 쌓인 재떨이만이 뒹구는 <em>절망적인 공간</em>.</span>
+      </li>
+    </ul>
+
+    <div class="fear-box reveal reveal-delay-3">
+      <p>
+        유일한 구원이자 집착의 대상인 당신마저 자신을 버리고 떠나,
+        영원한 고독 속에 남겨지는 것.<br><br>
+        극심한 불면증에 시달리지만, 당신을 품에 안고 체향을 맡을 때만
+        악몽 없이 깊은 잠에 빠져든다.
+      </p>
+    </div>
+  </div>
+
+  <div class="tattoo-panel reveal reveal-delay-2">
+    <div class="tattoo-border"></div>
+    <div class="tattoo-art">
+      <span class="tattoo-kanji-large">鯉</span>
+      <span class="tattoo-kanji-sub">龍</span>
+      <p class="tattoo-desc">
+        <span>入れ墨 · 이레즈미</span>
+        등 전체를 덮은 잉어 문신.<br>
+        폭포를 거슬러 용이 된다는 전설.<br>
+        그러나 댐 아래 고인 웅덩이에서<br>
+        천천히 부패하고 있을 뿐.
+      </p>
+    </div>
+  </div>
+</section>
+
+<hr class="fancy">
+
+<!-- ─── RELATIONSHIPS ─────────────────────────────── -->
+<section class="relation-section">
+  <div class="section-label reveal">관계도</div>
+  <h2 class="section-title reveal reveal-delay-1">그를 만든,<br>그를 버린 <span>인간</span></h2>
+
+  <div style="display:grid;gap:2px;margin-top:48px;">
+
+    <!-- 쿠로다구미 조직 카드 -->
+    <div class="relation-card org-card reveal">
+      <div class="relation-initial" style="border-color:rgba(139,26,26,0.5);color:var(--red-bright);">組</div>
+      <div>
+        <div class="relation-name">쿠로다구미</div>
+        <div class="relation-name-jp">黒田組 · 1967년 설립 · 現 크로스필드 홀딩스</div>
+        <div class="relation-desc">
+          전성기 가부키초를 실질적으로 지배했던 중견 야쿠자 조직. 산하 조직원 약 300명, 계열 기업 12개. 
+          유흥업소 관리·채권 추심·도박장 운영을 주력으로 삼았으나, 1991년 이후 단계적 합법화를 거쳐 
+          2011년 배제조례를 기점으로 조직명은 공식 소멸. 현재는 IT 컨설팅·부동산 투자·인력파견업을 영위하는 
+          <strong style="color:var(--cream);">주식회사 크로스필드 홀딩스</strong>로 탈바꿈했다.
+          달라진 것은 주먹 대신 계약서를, 칼 대신 변호사를 쓴다는 것뿐.
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;">
+          <span class="relation-badge" style="border-color:rgba(139,26,26,0.4);color:var(--red-bright);">야쿠자 → 합법 기업</span>
+          <span class="relation-badge" style="border-color:rgba(200,146,42,0.3);color:var(--amber-dim);">가부키초</span>
+          <span class="relation-badge" style="border-color:rgba(200,146,42,0.3);color:var(--amber-dim);">가상화폐 세탁</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 쿠로다 마사요시 -->
+    <div class="relation-card reveal reveal-delay-1">
+      <div class="relation-initial">黒</div>
+      <div>
+        <div class="relation-name">쿠로다 마사요시</div>
+        <div class="relation-name-jp">黒田 正義 · 58세 · 크로스필드 홀딩스 대표</div>
+        <div class="relation-desc">
+          고아원의 켄지를 직접 거둬 조직에 들인 은인이자 아버지 같은 존재였다.
+          그러나 조직의 합법화 과정에서 켄지를 '폭력의 잔재'로 규정하고 일방적으로 파문.
+          퇴직금 대신 빚보증서를 떠안기고 거리로 쫓아냈다.
+          현재는 비자금 장부의 행방이 묘연해지자 간헐적으로 접촉을 시도 중.
+        </div>
+        <span class="relation-badge">배신 · 파문</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER CTA ─────────────────────────────────── -->
+<section class="footer-cta">
+  <h2 class="footer-title reveal">그의 문을 두드릴 준비가 됐는가</h2>
+  <p class="footer-sub reveal reveal-delay-1">가부키초 변두리 셋방 · 곧 그의 발소리가 들린다</p>
+  <a href="#" class="footer-btn reveal reveal-delay-2" target="_blank">
+    플레이하기
+  </a>
+  <p class="footer-legal reveal reveal-delay-3">
+    AI 채팅 캐릭터 · 창작 목적 · 실존 인물 및 단체와 무관
+  </p>
+</section>
+
+<script>
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
