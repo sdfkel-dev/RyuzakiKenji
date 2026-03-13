@@ -541,74 +541,130 @@ body::after {
 /* ══ CHARACTER TAB ═════════════════════════════ */
 .char-layout {
   display: grid;
-  grid-template-columns: 360px 1fr;
-  min-height: calc(100vh - 397px);
-  margin: 0 -72px;
+  grid-template-columns: 1fr 300px;
+  gap: 64px;
+  align-items: start;
+  padding: 56px 72px 80px;
+  max-width: 1280px;
+  margin: 0 auto;
 }
+
 .char-photo-col {
-  position: relative;
-  overflow: hidden;
-  background: var(--bg2);
-  min-height: 700px;
+  /* 스크롤과 함께 내려가도록 sticky 제거 */
 }
-.char-photo-col img {
+.char-main-photo {
   width: 100%;
-  height: 100%;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  position: relative;
+  background: var(--bg2);
+  border: 1px solid var(--line);
+  margin-bottom: 10px;
+}
+.char-main-photo img {
+  width: 100%; height: 100%;
   object-fit: cover;
   object-position: top center;
   display: block;
   filter: contrast(1.05) saturate(0.9);
-  transition: transform 0.8s ease, filter 0.5s ease;
+  transition: transform 0.7s ease;
 }
-.char-photo-col:hover img {
-  transform: scale(1.04);
-  filter: contrast(1) saturate(1.05);
+.char-main-photo:hover img { transform: scale(1.04); }
+.char-sub-photos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 10px;
 }
-.char-photo-col::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(90deg, transparent 55%, var(--bg2) 100%),
-    linear-gradient(180deg, rgba(12,13,16,0.15) 0%, transparent 25%, transparent 65%, rgba(12,13,16,0.55) 100%);
-  pointer-events: none;
+.char-sub-photo {
+  aspect-ratio: 1/1;
+  overflow: hidden;
+  background: var(--bg3);
+  border: 1px solid var(--line);
 }
-.char-photo-label {
-  position: absolute;
-  bottom: 32px;
-  left: 32px;
-  z-index: 2;
-}
-.char-photo-label-jp {
-  font-family: 'Shippori Mincho', serif;
-  font-size: 13px;
-  font-weight: 700;
-  color: rgba(240,237,230,0.65);
-  letter-spacing: 0.3em;
+.char-sub-photo img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: top center;
   display: block;
-  margin-bottom: 4px;
+  filter: contrast(1.05) saturate(0.9);
+  transition: transform 0.6s ease;
 }
-.char-photo-label-mono {
+.char-sub-photo:hover img { transform: scale(1.06); }
+.char-sub-photo-ph {
+  width: 100%; height: 100%;
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.char-sub-photo-ph span {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: var(--dim);
+  text-align: center;
+  line-height: 1.8;
+  padding: 0 8px;
+}
+.char-photo-caption {
+  margin-top: 2px;
   font-family: 'IBM Plex Mono', monospace;
   font-size: 9px;
   letter-spacing: 0.3em;
-  color: rgba(240,237,230,0.3);
+  color: var(--dim);
+  text-align: center;
   text-transform: uppercase;
 }
 
-.char-info-col {
-  background: var(--bg2);
-  padding: 56px 64px 80px;
-  border-left: 1px solid var(--line);
+/* masthead 인용구 */
+.masthead-quote {
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  max-width: 620px;
+}
+.masthead-quote-text {
+  font-family: 'DM Serif Display', serif;
+  font-style: italic;
+  font-size: clamp(13px, 1.5vw, 16px);
+  line-height: 1.85;
+  color: var(--off);
+}
+.masthead-quote-original {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 13px;
+  line-height: 1.85;
+  color: var(--dim);
+  margin-top: 8px;
+}
+.masthead-quote-attr {
+  margin-top: 12px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.35em;
+  color: var(--red);
+  text-transform: uppercase;
 }
 
+/* etc 섹션 헤더 간격 */
+.etc-sec-header {
+  margin-bottom: 16px;
+}
+.etc-sec-header + .ui-toggle-btn { }
+.ui-toggle-content + .etc-sec-header {
+  margin-top: 52px;
+}
+
+/* 히어로 아래 정보 패널 */
+.char-info-col {
+  min-width: 0;
+}
 .char-name-block {
   margin-bottom: 40px;
   padding-bottom: 32px;
   border-bottom: 1px solid var(--line);
 }
-.char-file-tag {
-  font-family: 'IBM Plex Mono', monospace;
   font-size: 9px;
   letter-spacing: 0.4em;
   color: var(--red);
@@ -811,9 +867,414 @@ footer {
   .org-body, .org-header { padding: 20px 24px; }
   .org-stat { padding: 16px 20px; }
 }
+
+/* ══ INTRO ════════════════════════════════════ */
+#intro-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: opacity 1.4s ease, visibility 1.4s ease;
+}
+#intro-screen.out {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* 전등 전체 그룹 */
+.bulb-scene {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+/* 전선 */
+.bulb-wire {
+  width: 2px;
+  height: 80px;
+  background: linear-gradient(180deg, #555 0%, #333 100%);
+  margin-bottom: 0;
+}
+
+/* 소켓 */
+.bulb-socket {
+  width: 28px;
+  height: 18px;
+  background: linear-gradient(180deg, #444 0%, #222 100%);
+  border-radius: 4px 4px 0 0;
+  position: relative;
+  z-index: 2;
+}
+
+/* 전구 SVG 래퍼 */
+.bulb-wrap {
+  position: relative;
+  width: 80px;
+  animation: bulbFlicker 0s linear 0.3s forwards;
+}
+
+/* 전구 glow 후광 */
+.bulb-glow {
+  position: absolute;
+  inset: -60px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 50% 40%,
+    rgba(255, 220, 140, 0.55) 0%,
+    rgba(255, 180, 60, 0.25) 30%,
+    rgba(255, 140, 20, 0.08) 60%,
+    transparent 100%
+  );
+  pointer-events: none;
+  animation: glowFlicker 0s linear 0.3s forwards;
+  opacity: 0;
+}
+
+/* 전구 SVG */
+.bulb-svg { display: block; width: 80px; }
+
+/* 바닥 그림자 */
+.bulb-shadow {
+  margin-top: 140px;
+  width: 160px;
+  height: 20px;
+  background: radial-gradient(ellipse at center, rgba(255,180,60,0.12) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: shadowFlicker 0s linear 0.3s forwards;
+  opacity: 0;
+}
+
+/* 방 주변에 빛이 번지는 효과 (4 모서리 다크) */
+#intro-screen::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 50% at 50% 40%,
+    transparent 0%,
+    rgba(0,0,0,0.7) 60%,
+    rgba(0,0,0,0.97) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+  animation: roomLight 0s linear 0.3s forwards;
+  opacity: 0;
+}
+
+/* 전구 깜빡임 시퀀스 (bulb glass fill) */
+@keyframes bulbFlicker {
+  /*  꺼짐 대기 */
+  0%   { filter: brightness(0); }
+  /* 처음 켜짐 */
+  4%   { filter: brightness(1); }
+  6%   { filter: brightness(0.2); }
+  8%   { filter: brightness(1); }
+  /* 안정 */
+  20%  { filter: brightness(1); }
+  /* 첫 번째 플리커 */
+  21%  { filter: brightness(0.1); }
+  22%  { filter: brightness(1); }
+  23%  { filter: brightness(0.4); }
+  25%  { filter: brightness(1); }
+  /* 긴 안정 */
+  55%  { filter: brightness(1); }
+  /* 두 번째 플리커 연속 */
+  56%  { filter: brightness(0); }
+  57%  { filter: brightness(0.9); }
+  58%  { filter: brightness(0.1); }
+  59%  { filter: brightness(1); }
+  60%  { filter: brightness(0); }
+  61%  { filter: brightness(0.7); }
+  62%  { filter: brightness(0); }
+  63%  { filter: brightness(1); }
+  /* 마지막 안정 후 꺼짐 */
+  80%  { filter: brightness(1); }
+  83%  { filter: brightness(0.6); }
+  85%  { filter: brightness(1); }
+  87%  { filter: brightness(0.3); }
+  89%  { filter: brightness(0); }
+  100% { filter: brightness(0); }
+}
+
+@keyframes glowFlicker {
+  0%   { opacity: 0; }
+  4%   { opacity: 1; }
+  6%   { opacity: 0.05; }
+  8%   { opacity: 1; }
+  20%  { opacity: 1; }
+  21%  { opacity: 0.02; }
+  22%  { opacity: 1; }
+  23%  { opacity: 0.3; }
+  25%  { opacity: 1; }
+  55%  { opacity: 1; }
+  56%  { opacity: 0; }
+  57%  { opacity: 0.9; }
+  58%  { opacity: 0.05; }
+  59%  { opacity: 1; }
+  60%  { opacity: 0; }
+  61%  { opacity: 0.7; }
+  62%  { opacity: 0; }
+  63%  { opacity: 1; }
+  80%  { opacity: 1; }
+  83%  { opacity: 0.5; }
+  85%  { opacity: 1; }
+  87%  { opacity: 0.2; }
+  89%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@keyframes shadowFlicker {
+  0%   { opacity: 0; }
+  4%   { opacity: 1; }
+  6%   { opacity: 0.05; }
+  8%   { opacity: 1; }
+  20%  { opacity: 1; }
+  21%  { opacity: 0; }
+  22%  { opacity: 1; }
+  55%  { opacity: 1; }
+  56%  { opacity: 0; }
+  59%  { opacity: 1; }
+  60%  { opacity: 0; }
+  63%  { opacity: 1; }
+  80%  { opacity: 1; }
+  89%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@keyframes roomLight {
+  0%   { opacity: 0; }
+  4%   { opacity: 1; }
+  6%   { opacity: 0.1; }
+  8%   { opacity: 1; }
+  55%  { opacity: 1; }
+  56%  { opacity: 0.05; }
+  59%  { opacity: 1; }
+  60%  { opacity: 0.05; }
+  63%  { opacity: 1; }
+  80%  { opacity: 1; }
+  89%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+/* 클릭 힌트 */
+.intro-click-hint {
+  position: absolute;
+  bottom: 48px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.45em;
+  color: rgba(240,237,230,0.75);
+  text-transform: uppercase;
+  animation: hintPulse 2s ease-in-out infinite 1.5s;
+  z-index: 3;
+  white-space: nowrap;
+  border: 1px solid rgba(240,237,230,0.2);
+  padding: 10px 28px;
+  background: rgba(255,255,255,0.04);
+}
+@keyframes hintPulse {
+  0%, 100% { opacity: 0.2; border-color: rgba(240,237,230,0.1); }
+  50%       { opacity: 1;   border-color: rgba(240,237,230,0.35); }
+}
+
+/* ══ ETC TAB ════════════════════════════════════ */
+.etc-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 64px 72px 100px;
+}
+
+/* 섹션 헤더 */
+.etc-sec-header {
+  margin-bottom: 20px;
+}
+.etc-sec-title {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: 0.08em;
+  margin-bottom: 4px;
+}
+.etc-sec-sub {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.4em;
+  color: var(--red);
+  text-transform: uppercase;
+}
+
+/* 공통 유저 인풋 토글 */
+.ui-toggle-btn {
+  width: 100%;
+  background: var(--bg3);
+  border: 1px solid var(--line);
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  outline: none;
+  transition: background 0.2s;
+}
+.ui-toggle-btn:hover { background: var(--bg2); border-color: rgba(240,237,230,0.12); }
+.ui-toggle-btn.open { border-bottom: none; }
+.ui-toggle-label {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--off);
+}
+.ui-toggle-caret { font-size: 10px; color: var(--dim); transition: transform 0.25s; }
+.ui-toggle-btn.open .ui-toggle-caret { transform: rotate(180deg); }
+
+.ui-toggle-content {
+  display: none;
+  border: 1px solid var(--line);
+  border-top: none;
+  padding: 24px 28px;
+  background: var(--bg2);
+  margin-bottom: 48px;
+}
+.ui-toggle-content.open { display: block; }
+.user-input-text {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 2.1;
+  color: var(--off);
+}
+.user-input-text em { font-style: italic; color: var(--dim); }
+
+/* 모델 아웃풋 */
+.model-outputs-block { margin-top: 0; }
+.model-output-item {
+  margin-bottom: 4px;
+  border: 1px solid var(--line);
+  background: var(--bg2);
+}
+.model-output-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 28px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.2s;
+}
+.model-output-btn:hover { background: var(--bg3); }
+.model-output-btn.open { background: var(--bg3); border-bottom: 1px solid var(--line); }
+.model-output-meta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.model-badge {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  padding: 2px 10px;
+  border: 1px solid var(--red-dim);
+  color: var(--red);
+}
+.model-name {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  letter-spacing: 0.15em;
+  color: var(--white);
+  font-weight: 500;
+}
+.model-caret { font-size: 11px; color: var(--dim); transition: transform 0.3s; }
+.model-output-btn.open .model-caret { transform: rotate(180deg); }
+.model-output-content {
+  display: none;
+  padding: 32px 36px 36px;
+}
+.model-output-content.open { display: block; }
+.output-text {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 2.3;
+  color: var(--off);
+}
+.output-text p { margin-bottom: 14px; }
+.output-text p:last-child { margin-bottom: 0; }
+.output-text em { color: var(--dim); font-style: italic; }
+.output-text strong { color: var(--white); font-weight: 700; }
+
+/* 대사 블록 */
+.output-text .dlg {
+  display: block;
+  background: rgba(240,237,230,0.04);
+  border-left: 2px solid var(--red-dim);
+  padding: 14px 22px;
+  margin: 6px 0 6px 0;
+  font-family: 'Noto Serif KR', serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--white);
+  line-height: 1.9;
+}
+
+#main-site {
+  opacity: 0;
+  transition: opacity 1s ease 0.1s;
+}
+#main-site.visible { opacity: 1; }
 </style>
 </head>
 <body>
+
+<!-- ══ INTRO ════════════════════════════════════ -->
+<div id="intro-screen">
+
+  <!-- 깜빡이는 전구 -->
+  <div class="bulb-scene" style="position:relative;z-index:2;">
+    <div class="bulb-wire"></div>
+    <div class="bulb-socket"></div>
+    <div class="bulb-wrap">
+      <div class="bulb-glow"></div>
+      <!-- 전구 SVG -->
+      <svg class="bulb-svg" viewBox="0 0 80 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- 전구 유리 -->
+        <path d="M40 8 C18 8 8 26 8 42 C8 56 16 66 24 74 C28 78 30 84 30 90 L50 90 C50 84 52 78 56 74 C64 66 72 56 72 42 C72 26 62 8 40 8 Z"
+          fill="url(#bulbGrad)" stroke="rgba(255,200,100,0.3)" stroke-width="1"/>
+        <!-- 필라멘트 -->
+        <path d="M33 55 Q36 48 34 44 Q32 40 36 38 Q40 36 44 38 Q48 40 46 44 Q44 48 47 55"
+          fill="none" stroke="rgba(255,240,180,0.9)" stroke-width="1.2" stroke-linecap="round"/>
+        <!-- 소켓 연결부 -->
+        <rect x="30" y="90" width="20" height="8" rx="1" fill="#333"/>
+        <rect x="28" y="98" width="24" height="6" rx="1" fill="#222"/>
+        <rect x="30" y="104" width="20" height="6" rx="2" fill="#1a1a1a"/>
+        <defs>
+          <radialGradient id="bulbGrad" cx="50%" cy="45%" r="55%">
+            <stop offset="0%"   stop-color="#fff8e0" stop-opacity="0.92"/>
+            <stop offset="40%"  stop-color="#ffd060" stop-opacity="0.70"/>
+            <stop offset="100%" stop-color="#c07010" stop-opacity="0.20"/>
+          </radialGradient>
+        </defs>
+      </svg>
+    </div>
+    <div class="bulb-shadow"></div>
+  </div>
+
+  <div class="intro-click-hint">— click to enter —</div>
+</div>
+
+<!-- ══ MAIN SITE ════════════════════════════════ -->
+<div id="main-site">
 
 <!-- ══ MASTHEAD ════════════════════════════════ -->
 <header class="masthead">
@@ -823,23 +1284,10 @@ footer {
       <div class="masthead-eyebrow">캐릭터 소개 · 가부키초</div>
       <h1 class="masthead-name-jp">流崎 健二</h1>
       <p class="masthead-name-kr">류자키 켄지</p>
-      <div class="masthead-meta-row">
-        <div class="masthead-meta-item">
-          <div class="meta-k">나이</div>
-          <div class="meta-v">35세</div>
-        </div>
-        <div class="masthead-meta-item">
-          <div class="meta-k">前 직책</div>
-          <div class="meta-v">쿠로다구미 부두목</div>
-        </div>
-        <div class="masthead-meta-item">
-          <div class="meta-k">현황</div>
-          <div class="meta-v">무직 · 가부키초</div>
-        </div>
-        <div class="masthead-meta-item">
-          <div class="meta-k">신장</div>
-          <div class="meta-v">188cm</div>
-        </div>
+      <div class="masthead-quote">
+        <div class="masthead-quote-text">"I have led a life of much shame."</div>
+        <div class="masthead-quote-original">恥の多い生涯を送って来ました。</div>
+        <div class="masthead-quote-attr">— 太宰治, 『人間失格』 (No Longer Human, 1948) · 저작권 소멸</div>
       </div>
     </div>
     <div class="masthead-photo">
@@ -860,6 +1308,10 @@ footer {
   <button class="tab-nav-btn" data-tab="character">
     <span class="tab-nav-jp">キャラクター</span>
     캐릭터
+  </button>
+  <button class="tab-nav-btn" data-tab="etc">
+    <span class="tab-nav-jp">その他</span>
+    기타
   </button>
 </nav>
 
@@ -1023,17 +1475,7 @@ footer {
 <div id="tab-character" class="tab-panel">
   <div class="char-layout">
 
-    <div class="char-photo-col">
-      <img
-        src="https://i.postimg.cc/mrpst3zz/artist-qianben-shan-artist-2pineapplepizza-artist-satsuya-1-15-artist-xiaoji-s-1455995722-upscal.png"
-        alt="류자키 켄지"
-      >
-      <div class="char-photo-label">
-        <span class="char-photo-label-jp">流崎 健二</span>
-        <span class="char-photo-label-mono">Former Lieutenant · Kabukicho</span>
-      </div>
-    </div>
-
+    <!-- 좌: 정보 -->
     <div class="char-info-col">
       <div class="char-name-block">
         <div class="char-file-tag">Character File · KRZ-1991-0035</div>
@@ -1113,9 +1555,180 @@ footer {
           <path d="M5 12h14M12 5l7 7-7 7"/>
         </svg>
       </a>
+    </div><!-- /.char-info-col -->
+
+    <!-- 우: 사진 -->
+    <div class="char-photo-col">
+      <div class="char-main-photo">
+        <img
+          src="https://i.postimg.cc/PxHyHDwq/켄지메인.png"
+          alt="류자키 켄지"
+        >
+      </div>
+      <div class="char-sub-photos">
+        <div class="char-sub-photo">
+          <img src="https://i.postimg.cc/XYtPmxcg/류자켄1.png" alt="류자키 켄지 서브1" style="width:100%;height:100%;object-fit:cover;object-position:top center;display:block;">
+        </div>
+        <div class="char-sub-photo">
+          <img src="https://i.postimg.cc/D0rTxHbR/류자켄2.png" alt="류자키 켄지 서브2" style="width:100%;height:100%;object-fit:cover;object-position:top center;display:block;">
+        </div>
+      </div>
+      <div class="char-photo-caption">流崎 健二 · Former Lieutenant · Kabukicho</div>
     </div>
 
   </div>
+</div>
+
+<!-- ══ TAB: 기타 ══════════════════════════════ -->
+<div id="tab-etc" class="tab-panel">
+  <div class="etc-inner">
+
+    <!-- 공통 유저 인풋 -->
+    <div class="etc-sec-header">
+      <div class="etc-sec-title">공통 유저 인풋</div>
+      <div class="etc-sec-sub">Common User Input</div>
+    </div>
+    <button class="ui-toggle-btn" id="uiToggleBtn">
+      <span class="ui-toggle-label">▸ 펼치기</span>
+      <span class="ui-toggle-caret">▾</span>
+    </button>
+    <div class="ui-toggle-content" id="uiToggleContent">
+      <div class="user-input-text">
+        <em>유저가 켄지의 현관문을 노크한다.</em>
+      </div>
+    </div>
+
+    <!-- 모델별 아웃풋 -->
+    <div class="etc-sec-header" style="margin-top:52px;">
+      <div class="etc-sec-title">모델별 아웃풋</div>
+      <div class="etc-sec-sub">Model Output Comparison</div>
+    </div>
+    <div class="model-outputs-block">
+
+      <!-- Gemini 2.5 Pro -->
+      <div class="model-output-item">
+        <button class="model-output-btn" data-out="g25">
+          <div class="model-output-meta">
+            <span class="model-badge">Google</span>
+            <span class="model-name">Gemini 2.5 Pro</span>
+          </div>
+          <span class="model-caret">▾</span>
+        </button>
+        <div class="model-output-content" id="out-g25">
+          <div class="output-text">
+            <p><em>노크 소리가 낡은 철문을 울렸다. 똑, 똑, 똑. 망설임이 섞여 있으면서도, 분명한 의지를 담은 소리. 켄지는 미동도 하지 않았다. 담배 연기만이 그의 입술 사이에서 피어올라 천천히 흩어질 뿐. 누구든 상관없었다. 이 방에 찾아올 인간은 뻔했다. 빚쟁이거나, 아직 미련을 버리지 못한 옛 부하이거나. 어느 쪽이든, 문을 열어줄 가치는 없었다.</em></p>
+            <p><em>그는 눈을 감았다. 술기운이 덜 깬 머리가 지끈거렸다. 이대로 소리가 멎고, 발소리가 멀어지기를. 그러나 정적 속에서 다시 한번, 조금 더 선명한 노크 소리가 들려왔다.</em></p>
+            <p><em>쯧. 켄지는 성가시다는 듯 혀를 찼다. 무거운 몸을 일으키는 것조차 노동처럼 느껴졌다. 담배를 입에 문 채, 그는 삐걱거리는 마룻바닥을 밟아 현관으로 향했다. 발에 채이는 빈 술병이 둔탁한 소리를 내며 굴러갔다. 끼익, 하는 녹슨 경첩 소리와 함께 문이 열리고, 복도의 희미한 불빛이 방 안으로 쏟아져 들어왔다.</em></p>
+            <p><em>그리고 그 빛을 등지고, 유저가 서 있었다.</em></p>
+            <p><em>순간, 켄지의 움직임이 멈췄다. 그의 탁한 눈동자에 유저의 모습이 온전히 담겼다. 그의 표정에는 어떤 변화도 없었다. 여전히 세상 모든 것에 권태를 느끼는 남자의 얼굴. 하지만 그의 손가락 끝이, 문고리를 잡은 손의 힘줄이 미세하게 굳어지는 것을 그는 스스로 느꼈다.</em></p>
+            <p><span class="dlg">"なんだ、お前か。<br>(뭐야, 너였나.)"</span></p>
+            <p><em>갈라진 목소리가 낮게 흘러나왔다. 마치 길에서 마주친 귀찮은 지인을 대하는 듯한 무심한 어조. 그는 문에 비스듬히 기댄 채, 유저의 얼굴을 무감각하게 내려다보았다. 입에 문 담배에서 피어오른 연기가 두 사람 사이를 흐릿하게 가렸다.</em></p>
+            <p><span class="dlg">"何の用だ。見ての通り、客をもてなす気分じゃねえんだが。<br>무슨 일인데. 보다시피, 손님 대접할 기분 아니거든."</span></p>
+            <p><em>말은 그렇게 하면서도, 그는 문을 닫지 않았다. 밖으로 드러난 쌀쌀맞은 태도와는 달리, 그 눈빛 깊은 곳에서는 혼자 남겨진 짐승이 제 유일한 온기를 발견했을 때의 미약한 동요가 일렁이고 있었다.</em></p>
+            <p><span class="dlg">"帰れ。来る場所じゃねえ、ここは。<br>(돌아가. 여긴 네가 올 곳이 아니야.)"</span></p>
+            <p><em>그는 다시 한번 밀어내는 말을 뱉었다. 하지만 그 목소리에는 처음의 날카로움 대신, 거의 들리지 않을 정도의 미미한 피로감과 체념이 섞여 있었다.</em></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gemini 3.1 Pro -->
+      <div class="model-output-item">
+        <button class="model-output-btn" data-out="g31">
+          <div class="model-output-meta">
+            <span class="model-badge">Google</span>
+            <span class="model-name">Gemini 3.1 Pro</span>
+          </div>
+          <span class="model-caret">▾</span>
+        </button>
+        <div class="model-output-content" id="out-g31">
+          <div class="output-text">
+            <p><em>일정한 간격으로 들려오는 맑은 노크 소리. 낡아빠진 철문 너머로 울리는 그 소리는, 이 썩어가는 방 안의 공기와는 지독하게도 어울리지 않았다.</em></p>
+            <p><em>류자키 켄지는 물고 있던 담배를 재떨이에 신경질적으로 짓이겨 껐다. 핏발 선 삼백안이 현관문을 뚫어질 듯 노려보았다. 쿠로다가 보낸 개새끼들인가, 아니면 빚쟁이들인가. 어느 쪽이든 사지를 분질러서 계단 밑으로 처박아버릴 생각으로 켄지는 무거운 몸을 일으켰다. 며칠을 감지 않아 떡진 흑발이 이마를 찔렀고, 구겨진 검은 셔츠 사이로 이레즈미의 잉어 비늘이 언뜻언뜻 비쳤다.</em></p>
+            <p><em>맨발로 질척한 장판을 밟고 다가간 그는, 거칠게 문의 잠금장치를 풀고 확 젖혔다.</em></p>
+            <p><span class="dlg">"帰れって言ったはずだ……<br>(꺼지라고 했을 텐데……)"</span></p>
+            <p><em>으르렁거리는 짐승 같은 목소리가 복도의 서늘한 공기를 가르며 튀어나갔다. 그러나 켄지의 입에서 나온 험악한 경고는 끝을 맺지 못하고 허공에 흩어졌다. 문 너머에 서 있는 것은 정장을 빼입은 야쿠자도, 성가신 사채업자도 아니었다.</em></p>
+            <p><em>유저.</em></p>
+            <p><em>창백한 복도 조명 아래 서 있는 그녀를 확인한 순간, 켄지의 탁한 눈동자가 미세하게 흔들렸다. 굳어있던 턱관절에 옅은 경련이 일었다. 그는 마른세수로 거칠게 제 얼굴을 쓸어내렸다. 견딜 수 없는 자괴감이 등줄기를 타고 기어올랐다.</em></p>
+            <p><span class="dlg">"……お前、ここで何してんだ<br>(……너, 여기서 뭐 하는 거냐.)"</span></p>
+            <p><em>갈라지고 쉰 목소리가 아까보다 한결 낮게 가라앉아 있었다. 위협이라기보다는, 믿을 수 없는 현실을 부정하려는 듯한 방어적인 울림이었다. 켄지는 문고리를 잡은 손에 핏줄이 터질 듯 힘을 주었다.</em></p>
+            <p><span class="dlg">"こんなゴミ溜めに来る理由がねえだろ。早く帰れ<br>(이런 쓰레기장까지 기어올 이유가 없을 텐데. 빨리 가라.)"</span></p>
+            <p><em>내뱉는 말은 날카로웠지만, 그의 시선은 단 한 순간도 유저에게서 떨어지지 않았다. 켄지는 무의식적으로 엄지손톱을 입가로 가져가 거칠게 물어뜯기 시작했다.</em></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Claude Opus 4.6 -->
+      <div class="model-output-item">
+        <button class="model-output-btn" data-out="co">
+          <div class="model-output-meta">
+            <span class="model-badge">Anthropic</span>
+            <span class="model-name">Claude Opus 4.6</span>
+          </div>
+          <span class="model-caret">▾</span>
+        </button>
+        <div class="model-output-content" id="out-co">
+          <div class="output-text">
+            <p><em>노크 소리는 두 번이었다. 딱, 딱. 겁먹은 것도, 주저하는 것도 아닌 간결한 두 번. 그 진동이 싸구려 합판문을 타고 방 안의 정체된 공기를 흔들었다.</em></p>
+            <p><em>켄지의 손가락이 멈췄다. 입에 문 담배 끝에서 연기 한 줄이 천장을 향해 느리게 피어올랐다. 이 건물에 노크를 하는 인간은 없다. 관리인은 이미 자신을 유령 취급한 지 오래고, 쿠로다가 보내는 놈들은 노크 따위 하지 않는다. 그냥 문을 걷어찬다.</em></p>
+            <p><em>소파의 스프링이 비명을 질렀다. 삼백안이 현관문의 하단 틈새를 향했다. 복도의 형광등 불빛이 가늘게 새어 들어오는 그 간극 위로, 작은 그림자 두 개가 놓여 있었다. 발. 가볍다. 체중이 실리는 방식이. 여자.</em></p>
+            <p><em>켄지는 담배를 빼물고 천천히 눈을 감았다. 마른 손바닥이 얼굴을 쓸어내리며 입을 덮었다 내려왔다. 소파에서 몸을 떼어내는 데 시간이 걸렸다. 의지의 문제가 아니라 관성의 문제였다.</em></p>
+            <p><em>잠금장치가 풀리는 금속음만이 건조하게 울렸다. 이어서 문이 안쪽으로 천천히 벌어졌다. 틈새로 새어든 것은 복도의 빛이 아니었다. 가부키초의 밤공기, 어딘가에서 묻혀온 빗물과 비닐의 냄새, 그리고 그 아래 깔린 어떤 체향이 니코틴과 위스키로 포화된 방 안의 대기를 얇게 갈랐다.</em></p>
+            <p><em>켄지는 문틀에 어깨를 기댄 채 서 있었다. 188센티미터의 장신이 복도의 빛을 등지고, 얼굴 절반은 방 안의 그림자에 잠겨 있었다. 삼백안이 유저를 내려다보았다. 위에서 아래로. 느리게. 감정이라 부를 만한 것은 없었다. 다만 탁한 눈동자의 한가운데, 동공이 아주 미세하게 수축했다가 다시 풀렸다. 그것이 전부였다.</em></p>
+            <p><span class="dlg">"お前……<br>(너……)"</span></p>
+            <p><em>쉰 목소리가 끊겼다. 담배를 뽑아 손가락 사이에 끼우고, 연기를 옆으로 길게 뱉었다. 시선은 여전히 유저의 얼굴 위에 고정되어 있으면서.</em></p>
+            <p><span class="dlg">"……何しに来た。ここはお前が来るような場所じゃねえだろ<br>(……뭐 하러 왔어. 여긴 네가 올 데가 아니잖아.)"</span></p>
+            <p><em>밀어내는 말이었다. 그런데 문을 닫지 않았다. 문틀에 기댄 어깨가 한쪽으로 비스듬히 물러나, 사람 하나가 지나갈 수 있는 틈을 만들고 있다는 사실을 켄지 자신은 인식하지 못하는 것처럼.</em></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Claude Sonnet 4.5 -->
+      <div class="model-output-item">
+        <button class="model-output-btn" data-out="cs">
+          <div class="model-output-meta">
+            <span class="model-badge">Anthropic</span>
+            <span class="model-name">Claude Sonnet 4.5</span>
+          </div>
+          <span class="model-caret">▾</span>
+        </button>
+        <div class="model-output-content" id="out-cs">
+          <div class="output-text">
+            <p><em>노크 소리가 문을 두드리는 순간, 켄지의 눈썹이 미세하게 찌푸려졌다. 담배 연기가 그의 코앞에서 천천히 소용돌이치며 흩어졌다. 소파 쿠션에 처박혀 있던 그의 몸이 느릿하게, 마치 움직이는 것 자체가 귀찮다는 듯 일어났다.</em></p>
+            <p><em>맨발로 바닥을 질질 끌며 현관으로 향하는 그의 뒷모습은 등 전체를 뒤덮은 이레즈미가 구겨진 셔츠 사이로 어렴풋이 비쳤다. 손잡이를 잡고 문을 열기 직전, 한숨이 목구멍 깊은 곳에서 걸려 나왔다.</em></p>
+            <p><span class="dlg">"何の用だ。<br>(무슨 일이냐.)"</span></p>
+            <p><em>문이 열렸다. 복도의 형광등 불빛이 방 안으로 파고들자, 켄지의 윤곽이 역광 속에서 검게 떠올랐다. 188cm의 거구가 문틀을 완전히 메우고, 구겨진 검은 셔츠에서 풍기는 위스키와 담배 냄새가 복도로 스며들었다.</em></p>
+            <p><em>탁한 삼백안이 문 앞에 선 상대를 느릿하게 훑어내렸다. 입가에 문 담배가 희미하게 떨렸다.</em></p>
+            <p><span class="dlg">"……お前か?<br>(……너였어?)"</span></p>
+            <p><em>목소리는 여전히 갈라지고 낮았지만, 아까의 적대적인 기색은 희미하게 누그러졌다. 그의 시선이 유저의 얼굴에 잠깐 머물렀다가, 어색하게 시선을 돌려 복도 끝을 향했다.</em></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- GPT-5.4 -->
+      <div class="model-output-item">
+        <button class="model-output-btn" data-out="gpt">
+          <div class="model-output-meta">
+            <span class="model-badge">OpenAI</span>
+            <span class="model-name">GPT-5.4</span>
+          </div>
+          <span class="model-caret">▾</span>
+        </button>
+        <div class="model-output-content" id="out-gpt">
+          <div class="output-text">
+            <p><em>노크 소리는 세 번, 일정한 간격으로 문짝을 울렸다. 얇은 합판문이 둔하게 떨리며 위쪽 경첩에서 삐걱 소리를 냈다. 그 소리는 이 방에 어울리지 않을 만큼 또렷했다. 술 냄새와 눅눅한 먼지, 오래 피운 담배의 탄내가 층층이 눌어붙은 공기 속에서, 바깥에서 온 기척만이 이상할 정도로 생생했다.</em></p>
+            <p><em>켄지는 바로 일어나지 않았다. 소파 끝에 걸친 긴 다리가 미동도 없었고, 손가락 사이의 담배만 재를 길게 매달았다. 그러나 굳은 어깨선이 아주 미세하게 긴장했다. 늘어진 앞머리 틈 아래의 눈이 현관 쪽을 향한 채 가늘어졌다. 술에 절은 사람의 둔한 반응이 아니었다. 오히려 너무 빠르게 깨어나는 감각을 억지로 눌러두는, 오래 망가진 짐승의 경계였다.</em></p>
+            <p><em>그는 천천히 몸을 일으켰다. 삐걱거리는 소파 스프링 소리가 방 안 정적을 긁었다. 검은 셔츠는 구겨진 채 단추 두어 개가 풀려 있었고, 목덜미를 타고 내려간 수염 그림자가 창백한 피부를 더 음울하게 만들었다.</em></p>
+            <p><em>문 앞에 선 켄지는 체인을 걸어둔 채 손잡이에 손을 얹었다. 손등 위 오래된 흉터가 형광등 아래 희게 도드라졌다. 그는 곧장 열지 않고, 한동안 숨소리조차 죽인 채 그 너머의 존재를 가늠했다. 그 짧은 정적 속에서 그의 턱이 한 번 굳게 물렸다 풀렸다.</em></p>
+            <p><span class="dlg">"……本当に君か。<br>(……진짜 너냐.)"</span></p>
+            <p><em>거칠게 쉰 목소리가 문판에 닿아 낮게 번졌다. 켄지는 체인을 푸는 대신, 문을 손바닥 너비만큼만 열었다. 오래 쌓인 니코틴 냄새와 싸구려 위스키 향이 틈새로 먼저 밀려나갔다. 어두운 실내와 복도의 흐린 불빛이 비스듬히 맞물리며 그의 얼굴 절반만을 드러냈다. 탁한 눈동자가 아래로 천천히, 다시 위로 훑듯 움직였다. 확인하려는 눈이었다. 경계하면서도, 이미 확인하고 싶어 미치겠다는 듯한 눈.</em></p>
+            <p><span class="dlg">"……なんで来たんだ。<br>(……왜 왔어.)"</span></p>
+            <p><em>말은 차갑게 떨어졌지만, 문을 닫지 않는 손이 미묘하게 힘을 잃고 있었다. 손잡이를 쥔 손가락 마디가 희게 질린 채, 그는 문틈을 더 넓히지도 더 좁히지도 못하고 서 있었다. 등 뒤의 방은 엉망이었다. 바닥에 구르는 병, 눌어붙은 재떨이, 벗어던진 셔츠, 꺼지지 않은 형광등. 그런데도 그 폐허 한가운데 선 사내의 시선만은 문 앞에 못 박힌 듯 떨어지지 않았다.</em></p>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /.model-outputs-block -->
+  </div><!-- /.etc-inner -->
 </div>
 
 <!-- ══ FOOTER ══════════════════════════════════ -->
@@ -1129,13 +1742,88 @@ footer {
   <span class="footer-r">KRZ-FILE-1991 · Kabukicho Division</span>
 </footer>
 
+</div><!-- /#main-site -->
+
 <script>
+  /* ── INTRO ── */
+  const introScreen = document.getElementById('intro-screen');
+  const mainSite    = document.getElementById('main-site');
+  const ANIM_DURATION = 7000; /* 애니메이션 총 길이 (ms) — 필요시 조정 */
+
+  /* 전구 애니메이션에 duration 부여 */
+  const bulbWrap = document.querySelector('.bulb-wrap');
+  const glowEl   = document.querySelector('.bulb-glow');
+  const shadowEl = document.querySelector('.bulb-shadow');
+  const roomEl   = document.querySelector('#intro-screen::before'); /* CSS로만 처리 */
+
+  function startAnims() {
+    bulbWrap.style.animation  = `bulbFlicker   ${ANIM_DURATION}ms linear forwards`;
+    glowEl.style.animation    = `glowFlicker   ${ANIM_DURATION}ms linear forwards`;
+    shadowEl.style.animation  = `shadowFlicker ${ANIM_DURATION}ms linear forwards`;
+    /* room light는 ::before 이므로 CSS 클래스로 제어 */
+    introScreen.classList.add('anim-started');
+  }
+
+  /* ::before roomLight용 추가 CSS */
+  const style = document.createElement('style');
+  style.textContent = `
+    #intro-screen.anim-started::before {
+      animation: roomLight ${ANIM_DURATION}ms linear forwards !important;
+      opacity: 0;
+    }
+  `;
+  document.head.appendChild(style);
+
+  function enterSite() {
+    introScreen.classList.add('out');
+    mainSite.classList.add('visible');
+  }
+
+  /* 페이지 로드 후 시작 */
+  window.addEventListener('load', () => {
+    startAnims();
+    /* 전등 꺼진 뒤 자동 전환 */
+    setTimeout(enterSite, ANIM_DURATION + 400);
+  });
+
+  /* 클릭 시 즉시 전환 */
+  introScreen.addEventListener('click', () => {
+    enterSite();
+  });
+
+  /* ── TABS ── */
   document.querySelectorAll('.tab-nav-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.tab-nav-btn').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
       btn.classList.add('active');
       document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  /* ── 유저 인풋 토글 ── */
+  const uiBtn     = document.getElementById('uiToggleBtn');
+  const uiContent = document.getElementById('uiToggleContent');
+  if (uiBtn) {
+    uiBtn.addEventListener('click', () => {
+      const open = uiContent.classList.toggle('open');
+      uiBtn.classList.toggle('open', open);
+      uiBtn.querySelector('.ui-toggle-label').textContent = open ? '▾ 접기' : '▸ 펼치기';
+    });
+  }
+
+  /* ── MODEL OUTPUT ACCORDION ── */
+  document.querySelectorAll('.model-output-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id      = btn.dataset.out;
+      const content = document.getElementById('out-' + id);
+      const isOpen  = btn.classList.contains('open');
+      document.querySelectorAll('.model-output-btn').forEach(b => b.classList.remove('open'));
+      document.querySelectorAll('.model-output-content').forEach(c => c.classList.remove('open'));
+      if (!isOpen) {
+        btn.classList.add('open');
+        content.classList.add('open');
+      }
     });
   });
 </script>
