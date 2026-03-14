@@ -624,19 +624,19 @@ body::after {
   border-top: 1px solid var(--line);
   max-width: 620px;
 }
-.masthead-quote-text {
-  font-family: 'DM Serif Display', serif;
-  font-style: italic;
-  font-size: clamp(13px, 1.5vw, 16px);
+.masthead-quote-original {
+  font-family: 'Shippori Mincho', serif;
+  font-size: clamp(14px, 1.6vw, 18px);
   line-height: 1.85;
   color: var(--off);
 }
-.masthead-quote-original {
-  font-family: 'Shippori Mincho', serif;
-  font-size: 13px;
+.masthead-quote-kr {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 11px;
   line-height: 1.85;
   color: var(--dim);
-  margin-top: 8px;
+  margin-top: 5px;
+  letter-spacing: 0.05em;
 }
 .masthead-quote-attr {
   margin-top: 12px;
@@ -645,6 +645,13 @@ body::after {
   letter-spacing: 0.35em;
   color: var(--red);
   text-transform: uppercase;
+}
+.masthead-quote-attr-kr {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 10px;
+  color: var(--red-dim);
+  margin-top: 3px;
+  letter-spacing: 0.05em;
 }
 
 /* etc 섹션 헤더 간격 */
@@ -1285,9 +1292,10 @@ footer {
       <h1 class="masthead-name-jp">流崎 健二</h1>
       <p class="masthead-name-kr">류자키 켄지</p>
       <div class="masthead-quote">
-        <div class="masthead-quote-text">"I have led a life of much shame."</div>
         <div class="masthead-quote-original">恥の多い生涯を送って来ました。</div>
-        <div class="masthead-quote-attr">— 太宰治, 『人間失格』 (No Longer Human, 1948) · 저작권 소멸</div>
+        <div class="masthead-quote-kr">나는 부끄러움 많은 생애를 보내왔습니다.</div>
+        <div class="masthead-quote-attr">— 太宰治, 『人間失格』 (1948)</div>
+        <div class="masthead-quote-attr-kr">— 다자이 오사무, 『인간 실격』</div>
       </div>
     </div>
     <div class="masthead-photo">
